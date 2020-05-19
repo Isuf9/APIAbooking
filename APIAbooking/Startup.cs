@@ -55,7 +55,7 @@ namespace APIAbooking
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Clients}/{action=Index}/{id?}");
+                    pattern: "{controller=Clients}/{action=Create}/{id?}");
             });
         }
 

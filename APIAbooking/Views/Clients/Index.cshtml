@@ -19,43 +19,45 @@
         @foreach (var i in Model)
         {
             <b> <label>Profile picture:</label></b>
-            @i.ProfilePicture
-            <a style="text-indent: 5em;" asp-action="Edit" style="color:green">Edit</a>
-            <br />
-            <br />
+            
+            <img src="~/css/user.png" alt="User profil" />
+        <a asp-action="Edit" style="color:green">Edit</a>
+        <br />
+        <br />
 
-            <b> <label>Name:   </label></b>
-            @i.Name
-            <a asp-action="Edit" style="color:green">Edit</a>
-            <br />
-            <br />
+        <b> <label>Name:   </label></b>
+        @i.Name
+        <a asp-action="Edit" style="color:green">Edit</a>
+        <br />
+        <br />
 
-            <b> <label>Last Name:    </label></b>
-            @i.Lastname
-            <a asp-action="Edit" style="color:green">Edit</a>
-            <br />
-            <br />
+        <b> <label>Last Name:    </label></b>
+        @i.Lastname
+        <a asp-action="Edit" style="color:green">Edit</a>
+        <br />
+        <br />
 
-            <b> <label>Email:   </label></b>
-            @i.Email
-            <a asp-action="Edit" style="color:green">Edit</a>
+        <b> <label>Email:   </label></b>
+        @i.Email
+        <a asp-action="Edit" style="color:green">Edit</a>
+        <br />
+        <br />
+
+        @if (i.TypeOfUser == 2)
+        {
+
+
+            <p><b>My account:</b>User</p>
+
+            <button type="submit" style="background-color:#fc6b03" class="button">Get Premium Account</button>
             <br />
             <br />
-
-            @if (i.TypeOfUser == 2)
-            {
-                
-                <b>My account:</b><p>User</p>
-
-                <button type="submit" style="background-color:#fc6b03"  class="button">Get Premium Account</button>
-                <br />
-                <br />
-            }
-            else
-            {
-                <label tabindex="1">Type of user</label>
-                <p>User with Premium</p><br />
-            }
         }
+        else
+        {
+            <label tabindex="1">Type of user</label>
+            <p>User with Premium</p><br />
+        }
+    }
     </body>
 </html?>
