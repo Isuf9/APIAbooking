@@ -1,4 +1,4 @@
-﻿@model IEnumerable<APIAbooking.Models.Client>
+﻿ @model IEnumerable<APIAbooking.Models.Client>
 
 
 <html?>
@@ -43,7 +43,7 @@
         <br />
         <br />
 
-        @if (i.TypeOfUser == 2)
+        @if (i.TypeOfUser == 1)
         {
 
 
@@ -53,10 +53,14 @@
             <br />
             <br />
         }
+        else if(i.TypeOfUser == 2)
+        {
+            <p><b>My account:</b>Premium</p>
+
+        }
         else
         {
-            <label tabindex="1">Type of user</label>
-            <p>User with Premium</p><br />
+            <p>Wrong type of user</p>
         }
     }
     </body>

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using APIAbooking.Models;
 
 namespace APIAbooking.Controllers
@@ -13,31 +9,44 @@ namespace APIAbooking.Controllers
     {
         private IClientRepository _context;
         private APIAbookingContext _dbContext;
-        //public Client _client { get; set; }
-        public ClientsController(IClientRepository context, APIAbookingContext db) 
+        [BindProperty]
+        public Client _client { get; set; }
+        public ClientsController(IClientRepository context, APIAbookingContext db)
         {
-           _context = context;
+            _context = context;
             _dbContext = db;
         }
 
-        public async Task<IActionResult> Login(Client client)
+        [HttpGet]
+        public IActionResult Login()
         {
-            var _clientDb = _context.GetClients
-                .Where(c => c.Email == client.Email ||
-                c.Name == client.Name &&
-                c.Password == client.Password).
-                FirstOrDefault(); //krahasimi i te dhenave prej textfield edhe databazes
+            return View(_client);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Login(Client _client)
+        {
+            
+             var _EmailClient =  _context.GetClients
+                .Where(c => c.Email == _client.Email)
+                .FirstOrDefault(); //krahasimi i te dhenave prej textfield edhe databazes
 
-            if (_clientDb == null)
+            var _PasswordClient = _context.GetClients
+                .Where(c => c.Password == _client.Password)
+                .FirstOrDefault();
+
+            
+            if ( _EmailClient == null && _PasswordClient == null )
             {
-                ViewBag.Message = "You email and password are wrong!";
+                ViewBag.Message = "Your email or password is wrong!";
                 return View();
             }
-            else
-            {
+            else if( _EmailClient != null && _PasswordClient != null)
+            {   
                 ViewBag.Message = "You email and password are correct!";
-                return RedirectToAction("HomePage");
+                return RedirectToAction("HomePage", _client);
             }
+            
+            return View(_client);
         }
 
         [HttpGet]
@@ -45,31 +54,37 @@ namespace APIAbooking.Controllers
         {
             return View();
         }
+
         [HttpPost]
-        public  IActionResult Create(Client client)
+        public  IActionResult Create(int? id)
         {
 
             if (ModelState.IsValid)
             {
-                if (client.ClientId != 0)
+                if (id != 0)
                 {
-                    _dbContext.Clients.Add(client);
+                    _dbContext.Clients.Add(_client);
                 }
                
                 _dbContext.SaveChanges();
                 return RedirectToAction("HomePage");
             }
-            return View(client);
+            return View(_client);
 
         }
+      
 
-        public IActionResult HomePage()
+        [HttpGet]
+        public IActionResult HomePage(Client client)
         {
-            return View(_context.GetClients);
+            return View(_context.GetClients.Where(x => x.ClientId == client.ClientId));
         }
+
+               
         // GET: Profi of user
         public async Task<IActionResult> Index()
         {
+           
             return View(_context.GetClients);
         }
 

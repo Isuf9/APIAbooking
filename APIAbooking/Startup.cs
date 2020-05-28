@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using APIAbooking.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -25,9 +26,10 @@ namespace APIAbooking
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
             services.AddControllersWithViews();
             services.AddDbContext<APIAbookingContext>(option => option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddTransient<IClientRepository, EFClient>();
+            //services.AddTransient<IClientRepository, EFClient>();
             
         }
 
@@ -55,7 +57,7 @@ namespace APIAbooking
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Clients}/{action=Create}/{id?}");
+                    pattern: "{controller=Clients1}/{action=Login}/{id?}");
             });
         }
 

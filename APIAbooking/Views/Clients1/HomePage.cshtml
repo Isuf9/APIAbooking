@@ -1,16 +1,21 @@
 ﻿@model IEnumerable<APIAbooking.Models.Client>
 
-<html?>
+<!DOCTYPE html>
+<html>
 <head>
-
+   
 </head>
 <body>
+
     @foreach (var item in Model)
     {
-        <h1>Welcome,<b>@item.Name </b></h1>
+        <h1>Welcome, @item.ClientId<b>@item.Name </b></h1>
         <h4>Any post yet not posting, We are working for those...</h4>
+        <a asp-action="Index" asp-route-id="@item.ClientId">Personal info</a>
     }
+
+
 </body>
-</html?>
+</html>
 
 
