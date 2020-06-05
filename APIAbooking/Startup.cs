@@ -26,10 +26,11 @@ namespace APIAbooking
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddMvc(options => { }).AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<Startup>());
             services.AddHttpContextAccessor();
             services.AddControllersWithViews();
             services.AddDbContext<APIAbookingContext>(option => option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            //services.AddTransient<IClientRepository, EFClient>();
+            
             
         }
 
@@ -57,7 +58,7 @@ namespace APIAbooking
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Clients1}/{action=Login}/{id?}");
+                    pattern: "{controller=Clients}/{action=Login}/{id?}");
             });
         }
 
