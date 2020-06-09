@@ -1,0 +1,149 @@
+﻿@model APIAbooking.Models.Room
+
+@{
+    ViewData["Title"] = "CreatePost";
+}
+
+<h1>CreatePost</h1>
+
+<h4>Room</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="CreatePost">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @*<div class="form-group">
+            <label asp-for="ReservationIdFk" class="control-label"></label>
+            <input asp-for="ReservationIdFk" class="form-control" />
+            <span asp-validation-for="ReservationIdFk" class="text-danger"></span>
+        </div>*@
+            @*<div class="form-group">
+            <label asp-for="ClientIdFk" class="control-label"></label>
+            <select asp-for="ClientIdFk" class="form-control" asp-items="ViewBag.ClientIdFk"></select>
+        </div>*@
+
+            @*<div class="form-group">
+            <label asp-for="RoomSpaceItemIdFk" class="control-label"></label>
+            <select asp-for="RoomSpaceItemIdFk" class="form-control" asp-items="ViewBag.RoomSpaceItemIdFk"></select>
+        </div>
+        <div class="form-group">
+            <label asp-for="ExploreIdFk" class="control-label"></label>
+            <select asp-for="ExploreIdFk" class="form-control" asp-items="ViewBag.ExploreIdFk"></select>
+        </div>
+        <div class="form-group">
+            <label asp-for="RoomId" class="control-label"></label>
+            <input asp-for="RoomId" class="form-control" />
+            <span asp-validation-for="RoomId" class="text-danger"></span>
+        </div>*@
+
+
+            <div class="form-group">
+                <label asp-for="OwnerIdFk"  class="control-label"></label>
+                <select asp-for="OwnerIdFk" value="" class="form-control" asp-items="ViewBag.OwnerIdFk"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="MaxGuest" class="control-label"></label>
+                <input asp-for="MaxGuest" class="form-control" />
+                <span asp-validation-for="MaxGuest" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NrBathroom" class="control-label"></label>
+                <input asp-for="NrBathroom" class="form-control" />
+                <span asp-validation-for="NrBathroom" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Longtitude" class="control-label"></label>
+                <input asp-for="Longtitude" class="form-control" />
+                <span asp-validation-for="Longtitude" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Latitude" class="control-label"></label>
+                <input asp-for="Latitude" class="form-control" />
+                <span asp-validation-for="Latitude" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Country" class="control-label"></label>
+                <input asp-for="Country" class="form-control" />
+                <span asp-validation-for="Country" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Street" class="control-label"></label>
+                <input asp-for="Street" class="form-control" />
+                <span asp-validation-for="Street" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="City" class="control-label"></label>
+                <input asp-for="City" class="form-control" />
+                <span asp-validation-for="City" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NoHouse" class="control-label"></label>
+                <input asp-for="NoHouse" class="form-control" />
+                <span asp-validation-for="NoHouse" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Zip" class="control-label"></label>
+                <input asp-for="Zip" class="form-control" />
+                <span asp-validation-for="Zip" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WhatAmenitiesDoYouOffer" class="control-label"></label>
+                <input asp-for="WhatAmenitiesDoYouOffer" class="form-control" />
+                <span asp-validation-for="WhatAmenitiesDoYouOffer" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="WhatSpaceCanUseGuests" class="control-label"></label>
+                <input asp-for="WhatSpaceCanUseGuests" class="form-control" />
+                <span asp-validation-for="WhatSpaceCanUseGuests" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Photo" class="control-label"></label>
+                <input asp-for="Photo" class="form-control" />
+                <span asp-validation-for="Photo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Describe" class="control-label"></label>
+                <input asp-for="Describe" class="form-control" />
+                <span asp-validation-for="Describe" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PhoneNumber" class="control-label"></label>
+                <input asp-for="PhoneNumber" class="form-control" />
+                <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HouseRoule" class="control-label"></label>
+                <input asp-for="HouseRoule" class="form-control" />
+                <span asp-validation-for="HouseRoule" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NoticeGuest" class="control-label"></label>
+                <input asp-for="NoticeGuest" class="form-control" />
+                <span asp-validation-for="NoticeGuest" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Checkout" class="control-label"></label>
+                <input asp-for="Checkout" class="form-control" />
+                <span asp-validation-for="Checkout" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Checkin" class="control-label"></label>
+                <input asp-for="Checkin" class="form-control" />
+                <span asp-validation-for="Checkin" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Price" class="control-label"></label>
+                <input asp-for="Price" class="form-control" />
+                <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

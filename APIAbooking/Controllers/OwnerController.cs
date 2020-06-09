@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using APIAbooking.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace APIAbooking.Controllers
 {
@@ -47,7 +48,100 @@ namespace APIAbooking.Controllers
 
         public IActionResult Create() => View(nameof(Create));
 
+        [HttpPost]
+        public IActionResult Create(RoomOwner owner)
+        {
 
+            if (ModelState.IsValid)
+            {
+                if (owner.OwnerId != 0)
+                {
+                    _dbContext.RoomOwners.Add(owner);
+                }
+
+                _dbContext.SaveChanges();
+                return RedirectToAction("HomePage", owner.Email);
+            }
+            return View(owner);
+        }
+
+        public IActionResult CreatePost() => View(nameof(CreatePost));
+
+        [HttpPost]
+        public IActionResult CreatePost(Room room)
+        {
+
+            if (ModelState.IsValid)
+            {
+                if (room.RoomId != 0)
+                {
+                    _dbContext.Rooms.Add(room);
+                }
+
+                _dbContext.SaveChanges();
+                return RedirectToAction(nameof(Dashboard));
+            }
+            return View(room);
+        }
+        /// <summary>
+        /// E kthen view edit me te dhena te mbushura te userit te sakt 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> Edit(int? id)
+        {
+
+            if (id == 0)
+            {
+                NotFound("404 error");
+            }
+
+            var owner = _dbContext.RoomOwners.Find(id);
+
+            if (owner == null)
+            {
+                NotFound("404 error");
+            }
+            return View(owner);
+        }
+
+        /// <summary>
+        /// I ndryshon te dhenat e useri pasi aij te klikon buttonin update...
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="client"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, [Bind("ClientId,Name,Lastname,Email,Password,ProfilePicture,TypeOfUser")] RoomOwner owner)
+        {
+            if (owner.OwnerId == 0)
+            {
+                NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _dbContext.Update(owner);
+                    await _dbContext.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (owner.OwnerId == 0)
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Login));
+            }
+            return View(owner);
+        }
 
     }
 }

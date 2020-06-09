@@ -3,14 +3,16 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using APIAbooking.Models;
 using System.Data.Entity.Infrastructure;
+using System;
+using APIAbooking.Infrastructure.RandomClass;
 
 namespace APIAbooking.Controllers
 {
     public class ClientsController : Controller
     {
         #region Properties
-        private APIAbookingContext _dbContext;
-        
+        private readonly APIAbookingContext _dbContext;
+        //private Random _random;
         public ClientsController(APIAbookingContext db)
         {
             _dbContext = db;
@@ -112,7 +114,7 @@ namespace APIAbooking.Controllers
         [HttpPost]
         public  IActionResult Create(Client client)
         {
-
+           
             if (ModelState.IsValid)
             {
                 if (client.ClientId != 0)
@@ -184,6 +186,9 @@ namespace APIAbooking.Controllers
             }
             return View(client);
         }
+
+        //[Route("clients/index")]
+        public IActionResult Index() => View(nameof(Index));
         #endregion
     }
 }
