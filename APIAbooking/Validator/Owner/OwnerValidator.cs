@@ -11,33 +11,33 @@ namespace APIAbooking.Validator.Owner
     {
         public OwnerValidator()
         {
-            RuleFor(x => x.OwnerId)
-               .NotEqual(0)
-               .WithMessage("This field cannot be empty");
+            //RuleFor(x => x.OwnerId)
+            //   .NotEqual(0)
+            //   .WithMessage("This field cannot be empty");
 
-            RuleFor(x => x.Name)
-                .NotEmpty()
-                .WithMessage("This field cannot be empty");
+            //RuleFor(x => x.Name)
+            //    .NotEmpty()
+            //    .WithMessage("This field cannot be empty");
 
-            RuleFor(x => x.Lastname)
-                .NotEmpty()
-                .WithMessage("This field cannot be empty");
+            //RuleFor(x => x.Lastname)
+            //    .NotEmpty()
+            //    .WithMessage("This field cannot be empty");
 
-            RuleFor(x => x.Email)
-                .NotEmpty()
-                .WithMessage("This field cannot be empty");
+            //RuleFor(x => x.Email)
+            //    .NotEmpty()
+            //    .WithMessage("This field cannot be empty");
 
-            RuleFor(x => x.Email)
-                .EmailAddress()
-                .WithMessage("Enter an email addres");
+            //RuleFor(x => x.Email)
+            //    .EmailAddress()
+            //    .WithMessage("Enter an email addres");
 
-            RuleFor(x => x.Email)
-                .NotEqual(x => x.Email)
-                .WithMessage("This email now is use, please enter a new");
+            //RuleFor(x => x.Email)
+            //    .NotEqual(x => x.Email)
+            //    .WithMessage("This email now is use, please enter a new");
 
-            RuleFor(x => x.Password)
-                .NotEmpty()
-                .WithMessage("This field cannot be empty");
+            //RuleFor(x => x.Password)
+            //    .NotEmpty()
+            //    .WithMessage("This field cannot be empty");
         }
     }
 }

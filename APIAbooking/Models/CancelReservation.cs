@@ -3,16 +3,16 @@ using System.Collections.Generic;
 
 namespace APIAbooking.Models
 {
-    public partial class Reservation
+    public partial class CancelReservation
     {
-        public Reservation()
+        public CancelReservation()
         {
             ReservationRooms = new HashSet<ReservationRoom>();
         }
 
         public string ReservationId { get; set; }
         public string ClientIdFk { get; set; }
-        public DateTime? TimeBooking { get; set; }
+        public DateTime? TimeCancel { get; set; }
 
         public virtual Client ClientIdFkNavigation { get; set; }
         public virtual ICollection<ReservationRoom> ReservationRooms { get; set; }

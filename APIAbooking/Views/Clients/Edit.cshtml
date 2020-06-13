@@ -35,7 +35,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="ProfilePicture" class="control-label"></label>
-                <input asp-for="ProfilePicture" class="form-control" />
+                <input type="file" id="img" name="img" accept="image/*">
                 <span asp-validation-for="ProfilePicture" class="text-danger"></span>
             </div>
             <div class="form-group">

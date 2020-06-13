@@ -5,19 +5,15 @@ namespace APIAbooking.Models
 {
     public partial class PayMethod
     {
-        public int PayId { get; set; }
-        public int PayIdForSentMoney { get; set; }
-        public string Pay { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
-        public string CardNr { get; set; }
-        public string ZipCode { get; set; }
-        public DateTime? ExperationDate { get; set; }
-        public string SecurityCode { get; set; }
-        public bool Confirmaton { get; set; }
-        public int? Reservation { get; set; }
+        public PayMethod()
+        {
+            ReservationRooms = new HashSet<ReservationRoom>();
+        }
 
-        public virtual Reservation ReservationNavigation { get; set; }
-        public virtual SentMoney SentMoney { get; set; }
+        public string PayId { get; set; }
+        public string TypePayFk { get; set; }
+
+        public virtual TypePay TypePayFkNavigation { get; set; }
+        public virtual ICollection<ReservationRoom> ReservationRooms { get; set; }
     }
 }

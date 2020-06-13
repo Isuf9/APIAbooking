@@ -16,24 +16,23 @@ namespace APIAbooking.Models
         }
 
         public virtual DbSet<Aventure> Aventures { get; set; }
+        public virtual DbSet<Booking> Bookings { get; set; }
+        public virtual DbSet<CanAddExplorer> CanAddExplorers { get; set; }
+        public virtual DbSet<CancelBooking> CancelBookings { get; set; }
         public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<Explore> Explores { get; set; }
         public virtual DbSet<Food> Foods { get; set; }
-        public virtual DbSet<PayMethod> PayMethods { get; set; }
         public virtual DbSet<Place> Places { get; set; }
-        public virtual DbSet<Reservation> Reservations { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
         public virtual DbSet<RoomOwner> RoomOwners { get; set; }
-        public virtual DbSet<RoomSpaceItem> RoomSpaceItems { get; set; }
-        public virtual DbSet<SentMoney> SentMoneys { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<TypePay> TypePays { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=.; Database=APIAbooking; user id=sa; password=isufisuf");
+                optionsBuilder.UseSqlServer("Server=.; Database=APIAbooking_II; user id=sa; password=isufisuf");
             }
         }
 
@@ -41,204 +40,10 @@ namespace APIAbooking.Models
         {
             modelBuilder.Entity<Aventure>(entity =>
             {
-                entity.ToTable("Aventure");
+                entity.ToTable("aventure");
 
                 entity.Property(e => e.AventureId)
-                    .HasColumnName("Aventure_id")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.Describe)
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Expl).HasColumnName("expl");
-
-                entity.Property(e => e.Name)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.HasOne(d => d.ExplNavigation)
-                    .WithMany(p => p.Aventures)
-                    .HasForeignKey(d => d.Expl)
-                    .HasConstraintName("FK__Aventure__expl__15502E78");
-            });
-
-            modelBuilder.Entity<Client>(entity =>
-            {
-                entity.ToTable("Client");
-
-                entity.Property(e => e.ClientId)
-                    .HasColumnName("Client_id")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.Email)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Lastname)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Name)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Password)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ProfilePicture).HasColumnType("text");
-            });
-
-            modelBuilder.Entity<Explore>(entity =>
-            {
-                entity.ToTable("Explore");
-
-                entity.Property(e => e.ExploreId)
-                    .HasColumnName("Explore_id")
-                    .ValueGeneratedNever();
-            });
-
-            modelBuilder.Entity<Food>(entity =>
-            {
-                entity.ToTable("Food");
-
-                entity.Property(e => e.FoodId)
-                    .HasColumnName("Food_id")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.Describe)
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Expl).HasColumnName("expl");
-
-                entity.Property(e => e.Name)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.HasOne(d => d.ExplNavigation)
-                    .WithMany(p => p.Foods)
-                    .HasForeignKey(d => d.Expl)
-                    .HasConstraintName("FK__Food__expl__182C9B23");
-            });
-
-            modelBuilder.Entity<PayMethod>(entity =>
-            {
-                entity.HasKey(e => e.PayIdForSentMoney)
-                    .HasName("PK__PayMetho__CA4530CC667B5EFD");
-
-                entity.ToTable("PayMethod");
-
-                entity.Property(e => e.PayIdForSentMoney)
-                    .HasColumnName("Pay_id_for_sent_money")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.CardNr)
-                    .HasColumnName("card_Nr")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Confirmaton).HasColumnName("confirmaton");
-
-                entity.Property(e => e.ExperationDate)
-                    .HasColumnName("experation_date")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.FirstName)
-                    .HasColumnName("first_name")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.LastName)
-                    .HasColumnName("last_name")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Pay)
-                    .HasMaxLength(30)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.PayId).HasColumnName("Pay_id");
-
-                entity.Property(e => e.Reservation).HasColumnName("reservation");
-
-                entity.Property(e => e.SecurityCode)
-                    .HasColumnName("security_code")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ZipCode)
-                    .HasColumnName("zip_code")
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.HasOne(d => d.ReservationNavigation)
-                    .WithMany(p => p.PayMethods)
-                    .HasForeignKey(d => d.Reservation)
-                    .HasConstraintName("FK__PayMethod__reser__44FF419A");
-            });
-
-            modelBuilder.Entity<Place>(entity =>
-            {
-                entity.ToTable("Place");
-
-                entity.Property(e => e.PlaceId)
-                    .HasColumnName("Place_id")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.Describe)
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Expl).HasColumnName("expl");
-
-                entity.Property(e => e.Name)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.HasOne(d => d.ExplNavigation)
-                    .WithMany(p => p.Places)
-                    .HasForeignKey(d => d.Expl)
-                    .HasConstraintName("FK__Place__expl__1273C1CD");
-            });
-
-            modelBuilder.Entity<Reservation>(entity =>
-            {
-                entity.ToTable("Reservation");
-
-                entity.Property(e => e.ReservationId)
-                    .HasColumnName("Reservation_id")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.PayId).HasColumnName("Pay_id");
-
-                entity.Property(e => e.RoomId).HasColumnName("Room_id");
-
-                entity.HasOne(d => d.R)
-                    .WithMany(p => p.Reservations)
-                    .HasForeignKey(d => new { d.ReservationId, d.RoomId })
-                    .HasConstraintName("FK__Reservation__286302EC");
-            });
-
-            modelBuilder.Entity<Room>(entity =>
-            {
-                entity.HasKey(e => new { e.ReservationIdFk, e.RoomId })
-                    .HasName("PK__Room__259D75836950ACB3");
-
-                entity.ToTable("Room");
-
-                entity.Property(e => e.ReservationIdFk).HasColumnName("Reservation_idFK");
-
-                entity.Property(e => e.RoomId).HasColumnName("Room_id");
-
-                entity.Property(e => e.City)
-                    .HasMaxLength(50)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.ClientIdFk).HasColumnName("Client_idFK");
-
-                entity.Property(e => e.Country)
+                    .HasColumnName("aventure_id")
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
@@ -247,160 +52,376 @@ namespace APIAbooking.Models
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
-                entity.Property(e => e.ExploreIdFk).HasColumnName("Explore_idFK");
-
-                entity.Property(e => e.HouseRoule)
-                    .HasColumnName("House_Roule")
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.NoHouse)
-                    .HasColumnName("No_House")
-                    .HasMaxLength(15)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.OwnerIdFk).HasColumnName("Owner_idFK");
-
-                entity.Property(e => e.PhoneNumber)
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.Photo).HasColumnName("photo");
-
-                entity.Property(e => e.RoomSpaceItemIdFk).HasColumnName("RoomSpaceItem_idFK");
-
-                entity.Property(e => e.Street)
+                entity.Property(e => e.Expl)
+                    .HasColumnName("expl")
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.WhatAmenitiesDoYouOffer).HasColumnName("What_amenities_do_you_offer");
+                entity.Property(e => e.Name)
+                    .HasColumnName("name")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
-                entity.Property(e => e.WhatSpaceCanUseGuests).HasColumnName("What_space_can_use_Guests");
+                entity.Property(e => e.Rating).HasColumnName("rating");
 
-                entity.Property(e => e.Zip)
-                    .HasMaxLength(10)
+                entity.HasOne(d => d.ExplNavigation)
+                    .WithMany(p => p.Aventures)
+                    .HasForeignKey(d => d.Expl)
+                    .HasConstraintName("FK__aventure__expl__1B0907CE");
+            });
+
+            modelBuilder.Entity<Booking>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("booking");
+
+                entity.Property(e => e.ClientIdFk)
+                    .HasColumnName("client_id_fk")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.RoomIdFk)
+                    .HasColumnName("room_id_fk")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.TypeIdFk)
+                    .HasColumnName("type_id_fk")
+                    .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.ClientIdFkNavigation)
-                    .WithMany(p => p.Rooms)
+                    .WithMany()
                     .HasForeignKey(d => d.ClientIdFk)
-                    .HasConstraintName("FK__Room__Client_idF__22AA2996");
+                    .HasConstraintName("FK__booking__client___29221CFB");
 
-                entity.HasOne(d => d.ExploreIdFkNavigation)
-                    .WithMany(p => p.Rooms)
-                    .HasForeignKey(d => d.ExploreIdFk)
-                    .HasConstraintName("FK__Room__Explore_id__25869641");
+                entity.HasOne(d => d.RoomIdFkNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.RoomIdFk)
+                    .HasConstraintName("FK__booking__room_id__2A164134");
+
+                entity.HasOne(d => d.TypeIdFkNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.TypeIdFk)
+                    .HasConstraintName("FK__booking__type_id__2B0A656D");
+            });
+
+            modelBuilder.Entity<CanAddExplorer>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("can_addExplorer");
+
+                entity.Property(e => e.ClientIdFk)
+                    .HasColumnName("client_id_fk")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ExplorerIdFk)
+                    .HasColumnName("explorer_id_fk")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.ClientIdFkNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.ClientIdFk)
+                    .HasConstraintName("FK__can_addEx__clien__5FB337D6");
+
+                entity.HasOne(d => d.ExplorerIdFkNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.ExplorerIdFk)
+                    .HasConstraintName("FK__can_addEx__explo__5EBF139D");
+            });
+
+            modelBuilder.Entity<CancelBooking>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("cancel_booking");
+
+                entity.Property(e => e.ClientIdFk)
+                    .HasColumnName("client_id_fk")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.RoomIdFk)
+                    .HasColumnName("room_id_fk")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.TypeIdFk)
+                    .HasColumnName("type_id_fk")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.ClientIdFkNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.ClientIdFk)
+                    .HasConstraintName("FK__cancel_bo__clien__25518C17");
+
+                entity.HasOne(d => d.RoomIdFkNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.RoomIdFk)
+                    .HasConstraintName("FK__cancel_bo__room___2645B050");
+
+                entity.HasOne(d => d.TypeIdFkNavigation)
+                    .WithMany()
+                    .HasForeignKey(d => d.TypeIdFk)
+                    .HasConstraintName("FK__cancel_bo__type___2739D489");
+            });
+
+            modelBuilder.Entity<Client>(entity =>
+            {
+                entity.ToTable("client");
+
+                entity.Property(e => e.ClientId)
+                    .HasColumnName("client_id")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Email)
+                    .HasColumnName("email")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Lastname)
+                    .HasColumnName("lastname")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Name)
+                    .HasColumnName("name")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Password)
+                    .HasColumnName("password")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ProfilePicture)
+                    .HasColumnName("profile_picture")
+                    .HasColumnType("image");
+
+                entity.Property(e => e.TypeOfUser).HasColumnName("type_of_user");
+            });
+
+            modelBuilder.Entity<Explore>(entity =>
+            {
+                entity.ToTable("explore");
+
+                entity.Property(e => e.ExploreId)
+                    .HasColumnName("explore_id")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Food>(entity =>
+            {
+                entity.ToTable("food");
+
+                entity.Property(e => e.FoodId)
+                    .HasColumnName("food_id")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Describe)
+                    .HasColumnName("describe")
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Expl)
+                    .HasColumnName("expl")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Name)
+                    .HasColumnName("name")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Rating).HasColumnName("rating");
+
+                entity.HasOne(d => d.ExplNavigation)
+                    .WithMany(p => p.Foods)
+                    .HasForeignKey(d => d.Expl)
+                    .HasConstraintName("FK__food__expl__20C1E124");
+            });
+
+            modelBuilder.Entity<Place>(entity =>
+            {
+                entity.ToTable("place");
+
+                entity.Property(e => e.PlaceId)
+                    .HasColumnName("place_id")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Describe)
+                    .HasColumnName("describe")
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Expl)
+                    .HasColumnName("expl")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Name)
+                    .HasColumnName("name")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Rating).HasColumnName("rating");
+
+                entity.HasOne(d => d.ExplNavigation)
+                    .WithMany(p => p.Places)
+                    .HasForeignKey(d => d.Expl)
+                    .HasConstraintName("FK__place__expl__15502E78");
+            });
+
+            modelBuilder.Entity<Room>(entity =>
+            {
+                entity.ToTable("room");
+
+                entity.Property(e => e.RoomId)
+                    .HasColumnName("room_id")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Checkin)
+                    .HasColumnName("checkin")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.Checkout)
+                    .HasColumnName("checkout")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.City)
+                    .HasColumnName("city")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Country)
+                    .HasColumnName("country")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Describe)
+                    .HasColumnName("describe")
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Latitude).HasColumnName("latitude");
+
+                entity.Property(e => e.Longtitude).HasColumnName("longtitude");
+
+                entity.Property(e => e.MaxGuest).HasColumnName("max_guest");
+
+                entity.Property(e => e.NoHouse).HasColumnName("no_house");
+
+                entity.Property(e => e.NoticeGuest)
+                    .HasColumnName("notice_guest")
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                
+
+                entity.Property(e => e.NrBathroom).HasColumnName("nr_bathroom");
+
+                entity.Property(e => e.OwnerIdFk)
+                    .HasColumnName("owner_Id_fk")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PhoneNumber)
+                    .HasColumnName("phone_number")
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Photo)
+                    .HasColumnName("photo")
+                    .HasColumnType("image");
+
+                entity.Property(e => e.Price)
+                    .HasColumnName("price")
+                    .HasColumnType("decimal(18, 0)");
+
+                entity.Property(e => e.Reserved).HasColumnName("reserved");
+
+                entity.Property(e => e.SpecialItem)
+                    .HasColumnName("special_item")
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Street)
+                    .HasColumnName("street")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.WhatSpaceCanUseGuests).HasColumnName("what_space_can_use_Guests");
+
+                entity.Property(e => e.Zip)
+                    .HasColumnName("zip")
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
 
                 entity.HasOne(d => d.OwnerIdFkNavigation)
                     .WithMany(p => p.Rooms)
                     .HasForeignKey(d => d.OwnerIdFk)
-                    .HasConstraintName("FK__Room__Owner_idFK__239E4DCF");
-
-                entity.HasOne(d => d.RoomSpaceItemIdFkNavigation)
-                    .WithMany(p => p.Rooms)
-                    .HasForeignKey(d => d.RoomSpaceItemIdFk)
-                    .HasConstraintName("FK__Room__RoomSpaceI__24927208");
+                    .HasConstraintName("FK__room__owner_Id_f__7B5B524B");
             });
 
             modelBuilder.Entity<RoomOwner>(entity =>
             {
                 entity.HasKey(e => e.OwnerId)
-                    .HasName("PK__RoomOwne__BD605693E4F6BA60");
+                    .HasName("PK__room_own__3C4FBEE44BAC17E4");
 
-                entity.ToTable("RoomOwner");
+                entity.ToTable("room_owner");
 
                 entity.Property(e => e.OwnerId)
-                    .HasColumnName("Owner_id")
-                    .ValueGeneratedNever();
+                    .HasColumnName("owner_id")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Email)
+                    .HasColumnName("email")
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Lastname)
+                    .HasColumnName("lastname")
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Name)
+                    .HasColumnName("name")
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.Password)
+                    .HasColumnName("password")
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.ProfilePicture).HasColumnType("text");
+                entity.Property(e => e.ProfilePicture)
+                    .HasColumnName("profile_picture")
+                    .HasColumnType("image");
+
+                entity.Property(e => e.TypeOfUser).HasColumnName("type_of_user");
             });
 
-            modelBuilder.Entity<RoomSpaceItem>(entity =>
+            modelBuilder.Entity<TypePay>(entity =>
             {
-                entity.HasKey(e => e.SpaceId)
-                    .HasName("PK__RoomSpac__793ECA551C45145F");
+                entity.ToTable("type_pay");
 
-                entity.ToTable("RoomSpaceItem");
-
-                entity.Property(e => e.SpaceId)
-                    .HasColumnName("space_id")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.SpaceItem)
-                    .HasColumnName("space_item")
+                entity.Property(e => e.TypePayId)
+                    .HasColumnName("type_pay_id")
                     .HasMaxLength(50)
                     .IsUnicode(false);
-            });
 
-            modelBuilder.Entity<SentMoney>(entity =>
-            {
-                entity.HasKey(e => e.MoneyId)
-                    .HasName("PK__sentMone__290ACE1B96DAB96B");
-
-                entity.ToTable("sentMoney");
-
-                entity.Property(e => e.MoneyId)
-                    .HasColumnName("money_id")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.AcceptAmount)
-                    .HasColumnName("acceptAmount")
-                    .HasColumnType("decimal(18, 0)");
-
-                entity.Property(e => e.DataOfAcceptAmount)
-                    .HasColumnName("dataOfAcceptAmount")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.DataOfSentAmount)
-                    .HasColumnName("dataOfSentAmount")
-                    .HasColumnType("datetime");
-
-                entity.Property(e => e.SentAmount)
-                    .HasColumnName("sentAmount")
-                    .HasColumnType("decimal(18, 0)");
-
-                entity.HasOne(d => d.Money)
-                    .WithOne(p => p.SentMoney)
-                    .HasForeignKey<SentMoney>(d => d.MoneyId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__sentMoney__money__5070F446");
-
-                entity.HasOne(d => d.MoneyNavigation)
-                    .WithOne(p => p.SentMoney)
-                    .HasForeignKey<SentMoney>(d => d.MoneyId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__sentMoney__money__5165187F");
-            });
-
-            modelBuilder.Entity<User>(entity =>
-            {
-                entity.ToTable("users");
-
-                entity.Property(e => e.Id)
-                    .HasColumnName("id_")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.Name)
-                    .HasColumnName("name")
-                    .HasMaxLength(24)
-                    .IsUnicode(false);
+                entity.Property(e => e.PayPal).HasColumnName("payPal");
             });
 
             OnModelCreatingPartial(modelBuilder);

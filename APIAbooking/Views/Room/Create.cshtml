@@ -1,45 +1,21 @@
-﻿@*@model APIAbooking.Models.Room
+﻿@model APIAbooking.Models.Room
 
 @{
-    ViewData["Title"] = "CreatePost";
+    ViewData["Title"] = "Create";
 }
 
-<h1>CreatePost</h1>
+<h1>Create</h1>
 
-<h4>Room</h4>
+<h4>Create a post</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="CreatePost">
+        <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-            <label asp-for="ReservationIdFk" class="control-label"></label>
-            <input asp-for="ReservationIdFk" class="form-control" />
-            <span asp-validation-for="ReservationIdFk" class="text-danger"></span>
-        </div>
-            <div class="form-group">
-            <label asp-for="ClientIdFk" class="control-label"></label>
-            <select asp-for="ClientIdFk" class="form-control" asp-items="ViewBag.ClientIdFk"></select>
-        </div>
-
-            <div class="form-group">
-            <label asp-for="RoomSpaceItemIdFk" class="control-label"></label>
-            <select asp-for="RoomSpaceItemIdFk" class="form-control" asp-items="ViewBag.RoomSpaceItemIdFk"></select>
-        </div>
-        <div class="form-group">
-            <label asp-for="ExploreIdFk" class="control-label"></label>
-            <select asp-for="ExploreIdFk" class="form-control" asp-items="ViewBag.ExploreIdFk"></select>
-        </div>
-        <div class="form-group">
-            <label asp-for="RoomId" class="control-label"></label>
-            <input asp-for="RoomId" class="form-control" />
-            <span asp-validation-for="RoomId" class="text-danger"></span>
-        </div>
-
-
-            <div class="form-group">
-                <label asp-for="OwnerIdFk"  class="control-label"></label>
-                <select asp-for="OwnerIdFk" value="" class="form-control" asp-items="ViewBag.OwnerIdFk"></select>
+                <label asp-for="RoomId" class="control-label"></label>
+                <input asp-for="RoomId" class="form-control" />
+                <span asp-validation-for="RoomId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="MaxGuest" class="control-label"></label>
@@ -78,23 +54,23 @@
             </div>
             <div class="form-group">
                 <label asp-for="NoHouse" class="control-label"></label>
-                <input asp-for="NoHouse" class="form-control" />
+                <input type="number" asp-for="NoHouse" class="form-control" />
                 <span asp-validation-for="NoHouse" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Zip" class="control-label"></label>
-                <input asp-for="Zip" class="form-control" />
+                <input type="number" asp-for="Zip" class="form-control" />
                 <span asp-validation-for="Zip" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="WhatAmenitiesDoYouOffer" class="control-label"></label>
-                <input asp-for="WhatAmenitiesDoYouOffer" class="form-control" />
-                <span asp-validation-for="WhatAmenitiesDoYouOffer" class="text-danger"></span>
+                <label asp-for="WhatSpaceCanUseGuests" class="control-label"></label>
+                <input type="number" asp-for="WhatSpaceCanUseGuests" class="form-control" />
+                <span asp-validation-for="WhatSpaceCanUseGuests" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="WhatSpaceCanUseGuests" class="control-label"></label>
-                <input asp-for="WhatSpaceCanUseGuests" class="form-control" />
-                <span asp-validation-for="WhatSpaceCanUseGuests" class="text-danger"></span>
+                <label asp-for="SpecialItem" class="control-label"></label>
+                <input type="text" asp-for="SpecialItem" class="form-control" />
+                <span asp-validation-for="SpecialItem" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Photo" class="control-label"></label>
@@ -103,24 +79,20 @@
             </div>
             <div class="form-group">
                 <label asp-for="Describe" class="control-label"></label>
-                <input asp-for="Describe" class="form-control" />
+                <input type="text" asp-for="Describe" class="form-control" />
                 <span asp-validation-for="Describe" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PhoneNumber" class="control-label"></label>
-                <input asp-for="PhoneNumber" class="form-control" />
+                <input type="tel" asp-for="PhoneNumber" class="form-control" />
                 <span asp-validation-for="PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="HouseRoule" class="control-label"></label>
-                <input asp-for="HouseRoule" class="form-control" />
-                <span asp-validation-for="HouseRoule" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="NoticeGuest" class="control-label"></label>
-                <input asp-for="NoticeGuest" class="form-control" />
+                <input type="text" asp-for="NoticeGuest" class="form-control" />
                 <span asp-validation-for="NoticeGuest" class="text-danger"></span>
             </div>
+            
             <div class="form-group">
                 <label asp-for="Checkout" class="control-label"></label>
                 <input asp-for="Checkout" class="form-control" />
@@ -132,9 +104,18 @@
                 <span asp-validation-for="Checkin" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Reserved" class="control-label"></label>
+                <input asp-for="Reserved" class="form-control" />
+                <span asp-validation-for="Reserved" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Price" class="control-label"></label>
                 <input asp-for="Price" class="form-control" />
                 <span asp-validation-for="Price" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                
+                <input type="hidden" asp-for="OwnerIdFk" value="" class ="form-control" asp-items="ViewBag.OwnerIdFk"></input>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
@@ -145,5 +126,5 @@
 
 <div>
     <a asp-action="Index">Back to List</a>
-</div>*@
+</div>
 

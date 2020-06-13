@@ -1,64 +1,22 @@
-﻿@model IEnumerable<APIAbooking.Models.Room>
+﻿@model IEnumerable<APIAbooking.Models.RoomOwner>
 
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Dashboard for Owner</title>
+
 </head>
 <body>
-
-    <form class="" method="post">
-        <table>
-            <thead>
-                <tr>
-                    <th>Room id</th>
-                    <th>Max guest</th>
-                    <td>Number of bathroom</td>
-                    <th>Location</th>
-                    <th>Contry</th>
-                    <th>Street</th>
-                    <th>City</th>
-                    <th>Number of House</th>
-                    <th>Zip code</th>
-                    <th>What amentities do you offer</th>
-                    <th>What space can use guests</th>
-                    <th>Photo</th>
-                    <th>Description</th>
-                    <th>Phone number</th>
-                    <th>House roule</th>
-                    <th>Notice guest</th>
-                    <th>Checkin</th>
-                    <th>Checkout</th>
-                    <th>Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>@item.RoomId</td>
-                        <td>@item.MaxGuest</td>
-                        <td>@item.NrBathroom</td>
-                        <td>@item.Latitude + " " + @item.Longtitude</td>
-                        <td>@item.Country</td>
-                        <td>@item.Street</td>
-                        <td>@item.City</td>
-                        <td>@item.NoHouse</td>
-                        <td>@item.Zip</td>
-                        <td>@item.WhatAmenitiesDoYouOffer</td>
-                        <td>@item.WhatSpaceCanUseGuests</td>
-                        <td>@item.Photo</td>
-                        <td>@item.Describe</td>
-                        <td>@item.PhoneNumber</td>
-                        <td>@item.HouseRoule</td>
-                        <td>@item.NoticeGuest</td>
-                        <td>@item.Checkin</td>
-                        <td>@item.Checkout</td>
-                        <td>@item.Price</td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+    <form asp-action="Dashboard" method="post">
+        @foreach (var item in Model)
+        {
+            <h1>Welcome, <b>@item.Name </b></h1>
+            <h4>Any post yet not posting, We are working for those...</h4>
+            <a asp-action="Create" asp-controller="Room" asp-route-id="@item.OwnerId">Create a post</a>
+            <a asp-action="GetAllPost" asp-controller="Room" asp-route-id="@item.OwnerId">See your post</a>
+        }
     </form>
-    <a asp-action="OwnerID" asp-route-id="OwnerId">Personal info</a>
+
 </body>
 </html>
+
+

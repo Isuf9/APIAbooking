@@ -12,7 +12,7 @@ namespace APIAbooking.Validator.ClientForValidator
         public ClientValidator()
         {
             RuleFor(x => x.ClientId)
-               .NotEqual(0)
+               .NotEqual("0")
                .WithMessage("This field cannot be empty");
 
             RuleFor(x => x.Name)
@@ -31,9 +31,9 @@ namespace APIAbooking.Validator.ClientForValidator
                 .EmailAddress()
                 .WithMessage("Enter an email addres");
 
-            RuleFor(x => x.Email)
-               .NotEqual(x => x.Email)
-               .WithMessage("This email now is use, please enter a new");
+            //RuleFor(x => x.Email)
+            //   .NotEqual(x => x.Email)
+            //   .WithMessage("This email now is use, please enter a new");
 
             RuleFor(x => x.Password)
                 .NotEmpty()

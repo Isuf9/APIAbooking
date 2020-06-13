@@ -5,8 +5,8 @@ namespace APIAbooking.Models
 {
     public partial class Aventure
     {
-        public int AventureId { get; set; }
-        public int? Expl { get; set; }
+        public string AventureId { get; set; }
+        public string Expl { get; set; }
         public string Name { get; set; }
         public string Describe { get; set; }
         public int? Rating { get; set; }

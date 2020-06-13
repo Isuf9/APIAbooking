@@ -16,7 +16,16 @@ namespace APIAbooking.Controllers
         {
             _dbContext = db;
         }
-        public IActionResult Dashboard(Room _room) => View();
+        public IActionResult Dashboard(RoomOwner owner)
+        {
+            if(owner.Email == null)
+            {
+                NotFound();
+            }
+            return View(_dbContext.RoomOwners.Where(x => x.Email == owner.Email));
+        }
+
+        //public IActionResult CreateRoom(Room room) => View();
 
         public IActionResult Login() => View(nameof(Login));
 
@@ -25,7 +34,7 @@ namespace APIAbooking.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_owner.OwnerId == 0)
+                if (_owner.OwnerId == null)
                 {
                     NotFound();
                 }
@@ -35,13 +44,13 @@ namespace APIAbooking.Controllers
 
             var _PasswordOwner = _dbContext.RoomOwners.Where(x => x.Email == _owner.Password).FirstOrDefault();
 
-            if(_EmailOwner == null && _PasswordOwner == null)
+            if (_EmailOwner == null && _PasswordOwner == null)
             {
                 return View(nameof(Login));
             }
             else
             {
-                return RedirectToAction(nameof(Dashboard), _owner.Email);
+                return RedirectToAction("Dashboard",_owner);
             }
             return View(_owner);
         }
@@ -54,13 +63,13 @@ namespace APIAbooking.Controllers
 
             if (ModelState.IsValid)
             {
-                if (owner.OwnerId != 0)
+                if (owner.OwnerId != null)
                 {
                     _dbContext.RoomOwners.Add(owner);
                 }
 
                 _dbContext.SaveChanges();
-                return RedirectToAction("HomePage", owner.Email);
+                return RedirectToAction("Dashboard", owner);
             }
             return View(owner);
         }
@@ -73,7 +82,7 @@ namespace APIAbooking.Controllers
 
             if (ModelState.IsValid)
             {
-                if (room.RoomId != 0)
+                if (room.RoomId != null)
                 {
                     _dbContext.Rooms.Add(room);
                 }
@@ -115,7 +124,7 @@ namespace APIAbooking.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id, [Bind("ClientId,Name,Lastname,Email,Password,ProfilePicture,TypeOfUser")] RoomOwner owner)
         {
-            if (owner.OwnerId == 0)
+            if (owner.OwnerId == null)
             {
                 NotFound();
             }
@@ -129,7 +138,7 @@ namespace APIAbooking.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (owner.OwnerId == 0)
+                    if (owner.OwnerId == null)
                     {
                         return NotFound();
                     }

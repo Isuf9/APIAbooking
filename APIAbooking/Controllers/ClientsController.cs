@@ -20,9 +20,10 @@ namespace APIAbooking.Controllers
         #endregion
 
         #region Constructor
-        public async Task<IActionResult> Index(int? id)
+        [Route("api/clients/index/id")]
+        public async Task<IActionResult> Index(string? id)
         {
-            if (id == 0)
+            if (id == null)
             {
                 NotFound();
             }
@@ -36,9 +37,9 @@ namespace APIAbooking.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<IActionResult> PersonalInfo(int? id)
+        public async Task<IActionResult> PersonalInfo(string? id)
         {
-            if (id == 0)
+            if (id == null)
             {
                 NotFound();
             }
@@ -51,6 +52,7 @@ namespace APIAbooking.Controllers
         /// <param name="client"></param>
         /// <returns></returns>
         [HttpGet]
+        //[Route("clients/homepage/ClientId")]
         public async Task<IActionResult> HomePage(Client client)
         {
             if (client.Email == null)
@@ -73,6 +75,7 @@ namespace APIAbooking.Controllers
         /// <param name="_client"></param>
         /// <returns></returns>
         [HttpPost]
+       // [Route("clients/login/clientId")]
         public async Task<IActionResult> Login(Client _client)
         {
             
@@ -117,13 +120,13 @@ namespace APIAbooking.Controllers
            
             if (ModelState.IsValid)
             {
-                if (client.ClientId != 0)
+                if (client.ClientId != null)
                 {
                     _dbContext.Clients.Add(client);
                 }
                
                 _dbContext.SaveChanges();
-                return RedirectToAction("HomePage", client.Email);
+                return RedirectToAction("HomePage", client);
             }
             return View(client);
         }
@@ -133,10 +136,10 @@ namespace APIAbooking.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(string? id)
         {
             
-            if(id == 0)
+            if(id == null)
             {
                 NotFound("404 error");
             }
@@ -157,9 +160,9 @@ namespace APIAbooking.Controllers
         /// <param name="client"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, [Bind("ClientId,Name,Lastname,Email,Password,ProfilePicture,TypeOfUser")] Client client)
+        public async Task<IActionResult> Edit(string id, [Bind("ClientId,Name,Lastname,Email,Password,ProfilePicture,TypeOfUser")] Client client)
         {
-            if(client.ClientId == 0)
+            if(client.ClientId == null)
             {
                 NotFound();
             }
@@ -173,7 +176,7 @@ namespace APIAbooking.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (client.ClientId == 0)
+                    if (client.ClientId == null)
                     {
                         return NotFound();
                     }
