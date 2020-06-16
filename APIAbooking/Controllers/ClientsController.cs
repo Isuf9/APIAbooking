@@ -5,6 +5,7 @@ using APIAbooking.Models;
 using System.Data.Entity.Infrastructure;
 using System;
 using APIAbooking.Infrastructure.RandomClass;
+using APIAbooking.Services;
 
 namespace APIAbooking.Controllers
 {
@@ -12,10 +13,12 @@ namespace APIAbooking.Controllers
     {
         #region Properties
         private readonly APIAbookingContext _dbContext;
-        //private Random _random;
-        public ClientsController(APIAbookingContext db)
+        private IClientService clientService;
+        //public RandomClass _random;
+        public ClientsController(APIAbookingContext db, IClientService client)
         {
             _dbContext = db;
+            clientService = client;
         }
         #endregion
 
@@ -120,8 +123,10 @@ namespace APIAbooking.Controllers
            
             if (ModelState.IsValid)
             {
+                client.ClientId = clientService.GenerateIdRandom(client.ClientId);
                 if (client.ClientId != null)
                 {
+                    
                     _dbContext.Clients.Add(client);
                 }
                

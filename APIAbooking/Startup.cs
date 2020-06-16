@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using FluentValidation.AspNetCore;
+using APIAbooking.Services;
+using APIAbooking.Logic.Client;
 
 namespace APIAbooking
 {
@@ -22,6 +24,7 @@ namespace APIAbooking
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().AddFluentValidation(mvcConfiguration => mvcConfiguration.RegisterValidatorsFromAssemblyContaining<Startup>());
+            services.AddTransient<IClientService, ClientServices>();
             services.AddHttpContextAccessor();
             services.AddControllersWithViews();
             services.AddDbContext<APIAbookingContext>(option => option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));

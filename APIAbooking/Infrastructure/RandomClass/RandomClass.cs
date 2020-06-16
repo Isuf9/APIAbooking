@@ -7,13 +7,14 @@ namespace APIAbooking.Infrastructure.RandomClass
 {
     public class RandomClass
     {
+      
         
-        public int generateIdRandom(int? id)
+        public string generateIdRandom(string? id)
         {
-            Random random = new Random();
-
-             id = random.Next(1, 100);
-                return (int)id;
+             var guid = Guid.NewGuid().ToString();
+             id = guid;
+           
+             return id;
         }
 
         //public int Next(int value)
