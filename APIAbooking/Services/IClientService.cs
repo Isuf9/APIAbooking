@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace APIAbooking.Services
@@ -14,7 +15,7 @@ namespace APIAbooking.Services
 
         public void FindById(string id);
 
-        public bool IfEmailExist(string id, string email);
+        public bool IfEmailExist(string email);
 
         public void LoginSuccses(string email, string password);
 
@@ -22,6 +23,10 @@ namespace APIAbooking.Services
 
         public void ChangePassword(string id, string password);
 
-        public string GenerateIdRandom(string? id);
+        public string GenerateIdRandom(string id);
+
+        public string EncryptPassword(Encoding encoding, string password);
+
+        public string DecryptPassword(string password, Encoding encoding);
     }
 }

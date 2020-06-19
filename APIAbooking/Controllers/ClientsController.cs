@@ -6,6 +6,7 @@ using System.Data.Entity.Infrastructure;
 using System;
 using APIAbooking.Infrastructure.RandomClass;
 using APIAbooking.Services;
+using System.Text;
 
 namespace APIAbooking.Controllers
 {
@@ -62,6 +63,7 @@ namespace APIAbooking.Controllers
             {
                 NotFound();
             }
+            //clientService.DecryptPassword(client.Password, Encoding.UTF8);
             return View(_dbContext.Clients.Where(i => i.Email == client.Email));
         }
 
@@ -126,11 +128,21 @@ namespace APIAbooking.Controllers
                 client.ClientId = clientService.GenerateIdRandom(client.ClientId);
                 if (client.ClientId != null)
                 {
-                    
-                    _dbContext.Clients.Add(client);
+                    var result = clientService.IfEmailExist(client.Email);
+                    if (result == false)
+                    {
+                        
+                        client.Password = clientService.EncryptPassword(Encoding.UTF8, client.Password);
+                        _dbContext.Clients.Add(client);
+                        clientService.Save();
+                    }
+                    else
+                    {
+                        ViewBag.Message = "This email now is use, please enter a new";
+                    }
                 }
                
-                _dbContext.SaveChanges();
+                
                 return RedirectToAction("HomePage", client);
             }
             return View(client);

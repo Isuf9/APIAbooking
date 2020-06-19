@@ -3,6 +3,7 @@ using APIAbooking.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace APIAbooking.Logic.Client
@@ -39,6 +40,19 @@ namespace APIAbooking.Logic.Client
             }
         }
 
+        public string DecryptPassword(string password, Encoding encoding)
+        {
+            var result = Convert.FromBase64String(password);
+            return encoding.GetString(result);
+        }
+
+        public string EncryptPassword( Encoding encoding, string password)
+        {
+           
+            var textAsBytes = encoding.GetBytes(password);
+            return Convert.ToBase64String(textAsBytes);
+        }
+
         public void FindById(string? id) => _dbContext.Clients.Find(id);
 
         public string GenerateIdRandom(string id)
@@ -60,22 +74,20 @@ namespace APIAbooking.Logic.Client
             yield return client;
         }
 
-        public bool IfEmailExist(string id, string? email)
-        {
-            var client = _dbContext.Clients.Find(id);
-           
-            if(client == null)
-            {
+        public bool IfEmailExist(string? email)
+        {   
+            
+            var result =_dbContext.Clients;
+            
+            foreach(var item in result)
+            { 
+                if(item.Email == email)
+                {
+                    return true;
+                }
                
             }
-                if (client.Email == email)
-                    
-                    return true;
-
-                else
-                {
-                    return false;
-                }
+            return false;
         }
 
         public void LoginSuccses(string email, string password)
