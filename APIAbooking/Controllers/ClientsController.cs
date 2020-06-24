@@ -7,6 +7,7 @@ using System;
 using APIAbooking.Infrastructure.RandomClass;
 using APIAbooking.Services;
 using System.Text;
+using Microsoft.Extensions.Localization;
 
 namespace APIAbooking.Controllers
 {
@@ -14,12 +15,14 @@ namespace APIAbooking.Controllers
     {
         #region Properties
         private readonly APIAbookingContext _dbContext;
-        private IClientService clientService;
+        private readonly IClientService clientService;
+        private readonly IStringLocalizer<ClientsController> _localizer;
         //public RandomClass _random;
-        public ClientsController(APIAbookingContext db, IClientService client)
+        public ClientsController(APIAbookingContext db, IClientService client, IStringLocalizer<ClientsController> localizer)
         {
             _dbContext = db;
             clientService = client;
+            _localizer = localizer;
         }
         #endregion
 
@@ -138,7 +141,7 @@ namespace APIAbooking.Controllers
                     }
                     else
                     {
-                        ViewBag.Message = "This email now is use, please enter a new";
+                       ModelState.AddModelError("Email", _localizer["wrongemail"].ToString());
                     }
                 }
                

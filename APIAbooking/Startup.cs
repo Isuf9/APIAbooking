@@ -8,6 +8,7 @@ using Microsoft.Extensions.Hosting;
 using FluentValidation.AspNetCore;
 using APIAbooking.Services;
 using APIAbooking.Logic.Client;
+using Microsoft.AspNetCore.Mvc.Razor;
 
 namespace APIAbooking
 {
@@ -28,16 +29,23 @@ namespace APIAbooking
             services.AddHttpContextAccessor();
             services.AddControllersWithViews();
             services.AddDbContext<APIAbookingContext>(option => option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddLocalization(opts => { opts.ResourcesPath = "Resources"; });
 
-        //    services.AddAuthentication()
-        //       .AddGoogle(options =>
-        //       {
-        //           IConfigurationSection googleAuthNSection =
-        //               Configuration.GetSection("Authentication:Google");
+            services.AddMvc()
+                .AddViewLocalization(
+                LanguageViewLocationExpanderFormat.Suffix,
+                opts => { opts.ResourcesPath = "APIAbooking/Resources/ClientResorces"; })
+                .AddDataAnnotationsLocalization();
 
-        //           options.ClientId = googleAuthNSection["ClientId"];
-        //           options.ClientSecret = googleAuthNSection["ClientSecret"];
-        //       });
+            //    services.AddAuthentication()
+            //       .AddGoogle(options =>
+            //       {
+            //           IConfigurationSection googleAuthNSection =
+            //               Configuration.GetSection("Authentication:Google");
+
+            //           options.ClientId = googleAuthNSection["ClientId"];
+            //           options.ClientSecret = googleAuthNSection["ClientSecret"];
+            //       });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

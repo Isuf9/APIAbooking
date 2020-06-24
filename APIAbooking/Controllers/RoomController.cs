@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using APIAbooking.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.AspNetCore.Localization;
 namespace APIAbooking.Controllers
 {
     public class RoomController : Controller
@@ -104,7 +104,7 @@ namespace APIAbooking.Controllers
 
     
             [HttpGet]
-            public IActionResult Delete(string? id)
+            public IActionResult Delete(string id)
             {
 
                 if (id == null)
