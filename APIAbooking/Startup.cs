@@ -29,13 +29,13 @@ namespace APIAbooking
             services.AddHttpContextAccessor();
             services.AddControllersWithViews();
             services.AddDbContext<APIAbookingContext>(option => option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddLocalization(opts => { opts.ResourcesPath = "Resources"; });
+            services
+            .AddLocalization(options => options.ResourcesPath = "Resources");
 
-            services.AddMvc()
-                .AddViewLocalization(
-                LanguageViewLocationExpanderFormat.Suffix,
-                opts => { opts.ResourcesPath = "APIAbooking/Resources/ClientResorces"; })
-                .AddDataAnnotationsLocalization();
+            //    services
+            //      .AddMvc()
+            //      .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix);
+
 
             //    services.AddAuthentication()
             //       .AddGoogle(options =>

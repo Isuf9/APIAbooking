@@ -204,6 +204,10 @@ namespace APIAbooking.Models
                     .HasColumnName("profile_picture")
                     .HasColumnType("image");
 
+                //entity.Property(e => e.IsExist)
+                //    .HasColumnName("profile_picture")
+                //    .HasColumnType("image");
+
                 entity.Property(e => e.TypeOfUser).HasColumnName("type_of_user");
             });
 

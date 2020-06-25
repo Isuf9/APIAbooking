@@ -1,18 +1,18 @@
 ﻿using APIAbooking.Models;
-using APIAbooking.Services;
+using APIAbooking.Services.OwnerService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace APIAbooking.Logic.Client
+namespace APIAbooking.Logic.OwnerLogic
 {
-    public class ClientServices : IClientService
+    public class OwnerService : IOwnerService
     {
         private APIAbookingContext _dbContext;
 
-        public ClientServices(APIAbookingContext db)
+        public OwnerService(APIAbookingContext db)
         {
             _dbContext = db;
         }
@@ -23,13 +23,13 @@ namespace APIAbooking.Logic.Client
             {
                 if (id != null && password != null)
                 {
-                    var client = _dbContext.Clients.Find(id);
+                    var client = _dbContext.RoomOwners.Find(id);
                     client.Password = password;
                     Save();
                 }
                 else
                 {
-                    
+
                 }
             }
             catch (ArgumentNullException ex)
@@ -37,38 +37,38 @@ namespace APIAbooking.Logic.Client
             }
         }
 
-        public Models.Client Create(Models.Client client)
+        public Models.RoomOwner Create(Models.RoomOwner owner)
         {
-            _dbContext.Add(client);
+            _dbContext.RoomOwners.Add(owner);
             Save();
-            return client;
+            return owner;
         }
 
-       
 
-        public Models.Client Delete(string id)
+
+        public Models.RoomOwner Delete(string id)
         {
-            var client = GetById(id);
-            _dbContext.Remove(client);
+            var owner = GetById(id);
+            _dbContext.RoomOwners.Remove(owner);
             SaveAsync();
 
-            return client;
+            return owner;
         }
 
-        public Models.Client Edit(string id)
+        public Models.RoomOwner Edit(string id)
         {
-            var client = GetById(id);
-            _dbContext.Update(client);
+            var owner = GetById(id);
+            _dbContext.RoomOwners.Update(owner);
             SaveAsync();
 
-            return client;
+            return owner;
         }
 
-         public string DecryptPassword(string password, Encoding encoding)
-         {
-             var result = Convert.FromBase64String(password);
-             return encoding.GetString(result);
-         }
+        public string DecryptPassword(string password, Encoding encoding)
+        {
+            var result = Convert.FromBase64String(password);
+            return encoding.GetString(result);
+        }
 
         public string EncryptPassword(Encoding encoding, string password)
         {
@@ -84,18 +84,18 @@ namespace APIAbooking.Logic.Client
             return id;
         }
 
-        public  Models.Client GetById(string id_client)
+        public Models.RoomOwner GetById(string id_client)
         {
-            if(id_client == null) { return null; }
-            var client =  _dbContext.Clients.Find(id_client);
-            return client; 
+            if (id_client == null) { return null; }
+            var client = _dbContext.RoomOwners.Find(id_client);
+            return client;
         }
 
         public bool IfEmailExist(string email)
         {
             if (email == null) { return false; }
 
-            var result = _dbContext.Clients;
+            var result = _dbContext.RoomOwners;
 
             foreach (var item in result)
             {
@@ -107,11 +107,11 @@ namespace APIAbooking.Logic.Client
             return false;
         }
 
-        public Models.Client Login(string email, string password)
+        public Models.RoomOwner Login(string email, string password)
         {
-           var result = _dbContext.Clients
-                    .Where(x => x.Email == email && x.Password == password)
-                    .FirstOrDefault();
+            var result = _dbContext.RoomOwners
+                     .Where(x => x.Email == email && x.Password == password)
+                     .FirstOrDefault();
 
             return result;
         }
@@ -125,6 +125,5 @@ namespace APIAbooking.Logic.Client
         {
             _dbContext.SaveChangesAsync();
         }
-
     }
 }

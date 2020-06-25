@@ -15,13 +15,13 @@ namespace APIAbooking.Controllers
     {
         #region Properties
         private readonly APIAbookingContext _dbContext;
-        private readonly IClientService clientService;
+        private readonly IClientService _clientService;
         private readonly IStringLocalizer<ClientsController> _localizer;
-        //public RandomClass _random;
+        public RandomClass _random;
         public ClientsController(APIAbookingContext db, IClientService client, IStringLocalizer<ClientsController> localizer)
         {
             _dbContext = db;
-            clientService = client;
+            _clientService = client;
             _localizer = localizer;
         }
         #endregion
@@ -50,7 +50,7 @@ namespace APIAbooking.Controllers
             {
                 NotFound();
             }
-            return View(_dbContext.Clients.Where(i => i.ClientId == id));
+            return View(_clientService.GetById(id));
         }
 
         /// <summary>
@@ -66,8 +66,7 @@ namespace APIAbooking.Controllers
             {
                 NotFound();
             }
-            //clientService.DecryptPassword(client.Password, Encoding.UTF8);
-            return View(_dbContext.Clients.Where(i => i.Email == client.Email));
+            return View(_dbContext.Clients.Where(x =>x.Email == client.Email));
         }
 
         /// <summary>
@@ -84,30 +83,20 @@ namespace APIAbooking.Controllers
         /// <returns></returns>
         [HttpPost]
        // [Route("clients/login/clientId")]
-        public async Task<IActionResult> Login(Client _client)
+        public async Task<IActionResult> Login(Client client)
         {
-            
-             var _EmailClient =  _dbContext.Clients
-                .Where(c => c.Email == _client.Email)
-                .FirstOrDefault(); //krahasimi i te dhenave prej textfield edhe databazes
-
-            var _PasswordClient = _dbContext.Clients
-                .Where(c => c.Password == _client.Password)
-                .FirstOrDefault();
-
-            
-            if ( _EmailClient == null && _PasswordClient == null )
+            var result = _clientService.Login(client.Email, client.Password);
+           
+            if(result == null)
             {
-                ViewBag.Message = "Your email or password is wrong!";
-                return View();
+                ModelState.AddModelError("Password", _localizer["Email or password are wrong, enter again"].ToString());
+                return View(result);
             }
-            else if( _EmailClient != null && _PasswordClient != null)
-            {   
-                ViewBag.Message = "You email and password are correct!";
-                return RedirectToAction("HomePage", _client);
+            else
+            {
+                return RedirectToAction("HomePage", result);
             }
-            
-            return View(_client);
+            return View(result);
         }
 
         /// <summary>
@@ -122,34 +111,36 @@ namespace APIAbooking.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpPost]
-        public  IActionResult Create(Client client)
-        {
-           
-            if (ModelState.IsValid)
-            {
-                client.ClientId = clientService.GenerateIdRandom(client.ClientId);
-                if (client.ClientId != null)
-                {
-                    var result = clientService.IfEmailExist(client.Email);
-                    if (result == false)
-                    {
+        //[HttpPost]
+        //public  IActionResult Create(Client client)
+        //{
+
+        //    if (ModelState.IsValid)
+        //    {
+        //        client.ClientId = clientService.GenerateIdRandom(client.ClientId);
+        //        if (client.ClientId != null)
+        //        {
+        //            var result = clientService.IfEmailExist(client.Email);
+        //            //client.IsExist = result;
+        //            if (result == false)
+        //            {
                         
-                        client.Password = clientService.EncryptPassword(Encoding.UTF8, client.Password);
-                        _dbContext.Clients.Add(client);
-                        clientService.Save();
-                    }
-                    else
-                    {
-                       ModelState.AddModelError("Email", _localizer["wrongemail"].ToString());
-                    }
-                }
+        //                client.Password = clientService.EncryptPassword(Encoding.UTF8, client.Password);
+        //                _dbContext.Clients.Add(client);
+        //                clientService.Save();
+        //            }
+        //            else
+        //            {
+        //               ModelState.AddModelError("Email", _localizer["Now this email is used, please enter a new!"].ToString());
+        //                return View(client);
+        //            }
+        //        }
                
                 
-                return RedirectToAction("HomePage", client);
-            }
-            return View(client);
-        }
+        //        return RedirectToAction("HomePage", client);
+        //   }
+        //    return View(client);
+        //}
         /// <summary>
         /// E kthen view edit me te dhena te mbushura te userit te sakt 
         /// </summary>

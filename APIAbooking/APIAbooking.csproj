@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <Folder Include="App_Start\" />
+    <Folder Include="Resorces\ClientsController\" />
   </ItemGroup>
 
 

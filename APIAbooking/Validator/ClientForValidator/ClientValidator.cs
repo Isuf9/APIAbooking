@@ -27,8 +27,11 @@ namespace APIAbooking.Validator.ClientForValidator
                 .NotEmpty()
                 .WithMessage("This field cannot be empty");
 
-       
-        
+            //RuleFor(x => x.IsExist)
+            //    .Equal(true)
+            //    .WithMessage("This email now is used, pleas enter a new!");
+
+            
             RuleFor(x => x.Password)
                 .NotEmpty()
                 .WithMessage("This field cannot be empty");

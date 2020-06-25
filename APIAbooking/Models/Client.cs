@@ -15,5 +15,7 @@ namespace APIAbooking.Models
         public string Password { get; set; }
         public byte[] ProfilePicture { get; set; }
         public int? TypeOfUser { get; set; }
+
+        //public bool? IsExist { get; set; }
     }
 }

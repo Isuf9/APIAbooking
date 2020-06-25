@@ -7,19 +7,21 @@ using System.Threading.Tasks;
 
 namespace APIAbooking.Services
 {
-    public interface IClientService 
+    public interface IClientService
     {
-        public IEnumerable<Client> GetAll();
-
-        public IEnumerable<Client> GetById(string id_client);
-
-        public void FindById(string id);
+        
+        Client GetById(string id_client);
 
         public bool IfEmailExist(string email);
 
-        public void LoginSuccses(string email, string password);
+        public Client Login(string email, string password);
 
+        public Client Create(Client client);
+        public Client Edit(string id);
+        public Client Delete(string id);
+       
         public void Save();
+        public void SaveAsync();
 
         public void ChangePassword(string id, string password);
 
@@ -28,5 +30,7 @@ namespace APIAbooking.Services
         public string EncryptPassword(Encoding encoding, string password);
 
         public string DecryptPassword(string password, Encoding encoding);
+
+        //public string CurrentUser(Client client);
     }
 }
