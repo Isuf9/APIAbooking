@@ -112,40 +112,40 @@ namespace APIAbooking.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         //[HttpPost]
-        //public  IActionResult Create(Client client)
-        //{
+        public IActionResult Create(Client client)
+        {
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        client.ClientId = clientService.GenerateIdRandom(client.ClientId);
-        //        if (client.ClientId != null)
-        //        {
-        //            var result = clientService.IfEmailExist(client.Email);
-        //            //client.IsExist = result;
-        //            if (result == false)
-        //            {
+            if (ModelState.IsValid)
+            {
+                client.ClientId = _clientService.GenerateIdRandom(client.ClientId);
+                if (client.ClientId != null)
+                {
+                    var result = _clientService.IfEmailExist(client.Email);
+                    //client.IsExist = result;
+                    if (result == false)
+                    {
+
+                        client.Password = _clientService.EncryptPassword(Encoding.UTF8, client.Password);
+                        _clientService.Create(client);
                         
-        //                client.Password = clientService.EncryptPassword(Encoding.UTF8, client.Password);
-        //                _dbContext.Clients.Add(client);
-        //                clientService.Save();
-        //            }
-        //            else
-        //            {
-        //               ModelState.AddModelError("Email", _localizer["Now this email is used, please enter a new!"].ToString());
-        //                return View(client);
-        //            }
-        //        }
-               
-                
-        //        return RedirectToAction("HomePage", client);
-        //   }
-        //    return View(client);
-        //}
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("Email", _localizer["Now this email is used, please enter a new!"].ToString());
+                        return View(client);
+                    }
+                }
+
+
+                return RedirectToAction("HomePage", client);
+            }
+            return View(client);
+        }
         /// <summary>
         /// E kthen view edit me te dhena te mbushura te userit te sakt 
         /// </summary>
         /// <param name="id"></param>
-        /// <returns></returns>
+        /// <returns>T'kthen te faqja kryesore </returns> 
         [HttpGet]
         public async Task<IActionResult> Edit(string? id)
         {

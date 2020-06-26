@@ -36,7 +36,7 @@ namespace APIAbooking.Logic
             
             _dbContext.Update(entity);
             Save();
-            return en;
+            return entity;
         }
 
        
