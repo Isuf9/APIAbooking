@@ -9,6 +9,7 @@ using FluentValidation.AspNetCore;
 using APIAbooking.Services;
 using APIAbooking.Logic.Client;
 using Microsoft.AspNetCore.Mvc.Razor;
+using ReflectionIT.Mvc.Paging;
 
 namespace APIAbooking
 {
@@ -31,6 +32,7 @@ namespace APIAbooking
             services.AddDbContext<APIAbookingContext>(option => option.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             services
             .AddLocalization(options => options.ResourcesPath = "Resources");
+            services.AddPaging();
 
             //    services
             //      .AddMvc()

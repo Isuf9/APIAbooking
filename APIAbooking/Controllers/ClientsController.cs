@@ -3,21 +3,22 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using APIAbooking.Models;
 using System.Data.Entity.Infrastructure;
-using System;
-using APIAbooking.Infrastructure.RandomClass;
 using APIAbooking.Services;
 using System.Text;
 using Microsoft.Extensions.Localization;
+using ReflectionIT.Mvc;
+using Microsoft.EntityFrameworkCore;
+using ReflectionIT.Mvc.Paging;
 
 namespace APIAbooking.Controllers
 {
+  
     public class ClientsController : Controller
     {
         #region Properties
         private readonly APIAbookingContext _dbContext;
         private readonly IClientService _clientService;
         private readonly IStringLocalizer<ClientsController> _localizer;
-        public RandomClass _random;
         public ClientsController(APIAbookingContext db, IClientService client, IStringLocalizer<ClientsController> localizer)
         {
             _dbContext = db;
@@ -25,6 +26,27 @@ namespace APIAbooking.Controllers
             _localizer = localizer;
         }
         #endregion
+
+
+        public async Task<IActionResult> Home( int page=1)
+        {
+
+            var item = _dbContext.Rooms.AsNoTracking().OrderBy(x => x.RoomId);
+            var model = await PagingList<Room>.CreateAsync(item, 3, page);
+            return View(model);
+            //if(searchBy == "Contry")
+            //{
+            //    return View(_dbContext.Rooms.Where(x => x.Country == search || search == null)
+            //        .ToList()
+            //        .ToPagedList(page ?? 1, 3));
+            //}
+            //else
+            //{
+            //    return View(_dbContext.Rooms.Where(x => x.Describe.StartsWith(search) || search == null)
+            //        .ToList()
+            //        .ToPagedList(page ?? 1, 3));
+            //}
+        }
 
         #region Constructor
         [Route("api/clients/index/id")]
@@ -171,35 +193,35 @@ namespace APIAbooking.Controllers
         /// <param name="client"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Edit(string id, [Bind("ClientId,Name,Lastname,Email,Password,ProfilePicture,TypeOfUser")] Client client)
-        {
-            if(client.ClientId == null)
-            {
-                NotFound();
-            }
+        //public async Task<IActionResult> Edit(string id, [Bind("ClientId,Name,Lastname,Email,Password,ProfilePicture,TypeOfUser")] Client client)
+        //{
+        //    if(client.ClientId == null)
+        //    {
+        //        NotFound();
+        //    }
 
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _dbContext.Update(client);
-                    await _dbContext.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (client.ClientId == null)
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Login));
-            }
-            return View(client);
-        }
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            _dbContext.Update(client);
+        //            await _dbContext.SaveChangesAsync();
+        //        }
+        //        catch (DbUpdateConcurrencyException)
+        //        {
+        //            if (client.ClientId == null)
+        //            {
+        //                return NotFound();
+        //            }
+        //            else
+        //            {
+        //                throw;
+        //            }
+        //        }
+        //        return RedirectToAction(nameof(Login));
+        //    }
+        //    return View(client);
+        //}
 
         //[Route("clients/index")]
         public IActionResult Index() => View(nameof(Index));

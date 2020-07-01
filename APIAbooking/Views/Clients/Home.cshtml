@@ -1,0 +1,63 @@
+﻿@model ReflectionIT.Mvc.Paging.IPagingList<APIAbooking.Models.Room>
+@using ReflectionIT.Mvc.Paging;
+@addTagHelper *, ReflectionIT.Mvc.Paging
+
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Max guest</th>
+            <td>Number of bathroom</td>
+            <th>Contry</th>
+            <th>Street</th>
+            <th>City</th>
+            <th>Number of House</th>
+            <th>Zip code</th>
+            <th>What amentities do you offer</th>
+            <th>A sepecial item</th>
+            <th>Description</th>
+            <th>Phone number</th>
+            <th>Checkin</th>
+            <th>Checkout</th>
+            <th>Price</th>
+            <th>Is userd</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.MaxGuest</td>
+                <td>@item.NrBathroom</td>
+                <td>@item.Country</td>
+                <td>@item.Street</td>
+                <td>@item.City</td>
+                <td>@item.NoHouse</td>
+                <td>@item.Zip</td>
+                <td>@item.WhatSpaceCanUseGuests</td>
+                <td>@item.SpecialItem</td>
+                <td>@item.Describe</td>
+                <td>@item.PhoneNumber</td>
+                <td>@item.Checkin</td>
+                <td>@item.Checkout</td>
+                <td>@item.Price</td>
+                <td>@item.Reserved</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<nav>
+
+    @await this.Component.InvokeAsync("Pager", new {pagingList = this.Model})
+
+    @*@Html.PagedListPager((IPagedList)Model, page => Url.Action("Home", new
+        {
+            page,
+                searchBy = Request.QueryString["searchBy"],
+                search = Request.QueryString["search"]
+            }), PagedListRenderOptions.PageNumbersOnly)*@
+</nav>
+
+<nav>
+    <vc:pager paging-list="@Model"/>
+</nav>
