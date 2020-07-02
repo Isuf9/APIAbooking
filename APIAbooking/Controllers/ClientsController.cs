@@ -9,6 +9,8 @@ using Microsoft.Extensions.Localization;
 using ReflectionIT.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ReflectionIT.Mvc.Paging;
+using System.Collections.Generic;
+using System.Collections;
 
 namespace APIAbooking.Controllers
 {
@@ -28,10 +30,10 @@ namespace APIAbooking.Controllers
         #endregion
 
 
-        public async Task<IActionResult> Home( int page=1)
+        public async Task<IActionResult> Home(int page=1)
         {
-
             var item = _dbContext.Rooms.AsNoTracking().OrderBy(x => x.RoomId);
+            
             var model = await PagingList<Room>.CreateAsync(item, 3, page);
             return View(model);
             //if(searchBy == "Contry")

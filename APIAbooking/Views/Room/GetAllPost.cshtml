@@ -27,6 +27,7 @@
                         <th>Checkout</th>
                         <th>Price</th>
                         <th>Is userd</th>
+                        <th>Actions</th>
                     </tr>
                     
                 </thead>
@@ -50,8 +51,11 @@
                         <td>@item.Checkout</td>
                         <td>@item.Price</td>
                         <td>@item.Reserved</td>
-                        <a asp-action="Edit" asp-controller="Room" asp-route-id="@item.RoomId" style="color:green">Edit</a>
-                        <a asp-action="Delete" asp-controller="Room" asp-route-id="@item.RoomId" style="color:red">Delete</a>
+                        <td>
+                            <a asp-action="Edit" asp-controller="Room" asp-route-id="@item.RoomId" style="color:green">Edit</a>
+                            <a asp-action="Delete" asp-controller="Room" asp-route-id="@item.RoomId" style="color:red">Delete</a>
+                        
+                        </td>
                     </tr>
 
                     }

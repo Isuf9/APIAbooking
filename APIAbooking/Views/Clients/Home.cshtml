@@ -2,7 +2,11 @@
 @using ReflectionIT.Mvc.Paging;
 @addTagHelper *, ReflectionIT.Mvc.Paging
 
+    <nav>
 
+        @await this.Component.InvokeAsync("Pager", new { pagingList = this.Model })
+
+    </nav>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -46,17 +50,7 @@
         }
     </tbody>
 </table>
-<nav>
 
-    @await this.Component.InvokeAsync("Pager", new {pagingList = this.Model})
-
-    @*@Html.PagedListPager((IPagedList)Model, page => Url.Action("Home", new
-        {
-            page,
-                searchBy = Request.QueryString["searchBy"],
-                search = Request.QueryString["search"]
-            }), PagedListRenderOptions.PageNumbersOnly)*@
-</nav>
 
 <nav>
     <vc:pager paging-list="@Model"/>
