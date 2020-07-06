@@ -92,8 +92,7 @@ namespace APIAbooking.Controllers
         public async Task<IActionResult> Login(Client client)
         {
             var result = _clientService.Login(client.Email, client.Password);
-            HttpContext.Session.SetString("Name", result.Name+ " "+ result.Lastname);
-            //ViewBag.currentUser = HttpContext.Session.GetString("Name");
+            
             if(result == null)
             {
                 ModelState.AddModelError("Password", _localizer["Email or password are wrong, enter again"].ToString());
@@ -101,9 +100,10 @@ namespace APIAbooking.Controllers
             }
             else
             {
+                HttpContext.Session.SetString("Name", result.Name+ " "+ result.Lastname);
                 return RedirectToAction("Index");
+                
             }
-            return View(result);
         }
 
         /// <summary>
