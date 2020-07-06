@@ -33,6 +33,8 @@ namespace APIAbooking
             services
             .AddLocalization(options => options.ResourcesPath = "Resources");
             services.AddPaging();
+            services.AddDistributedMemoryCache();
+            services.AddSession();
 
             //    services
             //      .AddMvc()
@@ -65,11 +67,9 @@ namespace APIAbooking
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseRouting();
-
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

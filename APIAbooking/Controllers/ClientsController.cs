@@ -2,15 +2,13 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using APIAbooking.Models;
-using System.Data.Entity.Infrastructure;
 using APIAbooking.Services;
 using System.Text;
 using Microsoft.Extensions.Localization;
-using ReflectionIT.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ReflectionIT.Mvc.Paging;
-using System.Collections.Generic;
-using System.Collections;
+using ReflectionIT.Mvc;
+using Microsoft.AspNetCore.Http;
 
 namespace APIAbooking.Controllers
 {
@@ -28,38 +26,24 @@ namespace APIAbooking.Controllers
             _localizer = localizer;
         }
         #endregion
+        
 
-
-        public async Task<IActionResult> Home(int page=1)
-        {
-            var item = _dbContext.Rooms.AsNoTracking().OrderBy(x => x.RoomId);
+        //public async Task<IActionResult> Home(int page=1)
+        //{
             
-            var model = await PagingList<Room>.CreateAsync(item, 3, page);
-            return View(model);
-            //if(searchBy == "Contry")
-            //{
-            //    return View(_dbContext.Rooms.Where(x => x.Country == search || search == null)
-            //        .ToList()
-            //        .ToPagedList(page ?? 1, 3));
-            //}
-            //else
-            //{
-            //    return View(_dbContext.Rooms.Where(x => x.Describe.StartsWith(search) || search == null)
-            //        .ToList()
-            //        .ToPagedList(page ?? 1, 3));
-            //}
-        }
+        //    return View(_dbContext.Rooms.ToListAsync());
+        //}
 
         #region Constructor
-        [Route("api/clients/index/id")]
-        public async Task<IActionResult> Index(string? id)
-        {
-            if (id == null)
-            {
-                NotFound();
-            }
-            return View(_dbContext.Clients.Where(i => i.ClientId == id));
-        }
+        //[Route("api/clients/index/id")]
+        //public async Task<IActionResult> Index(string? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        NotFound();
+        //    }
+        //    return View(_dbContext.Clients.Where(i => i.ClientId == id));
+        //}
         #endregion
 
         #region ActionMethods
@@ -84,15 +68,13 @@ namespace APIAbooking.Controllers
         /// <returns></returns>
         [HttpGet]
         //[Route("clients/homepage/ClientId")]
-        public async Task<IActionResult> HomePage(Client client)
+        public async Task<IActionResult> Index(int page = 1)
         {
-            if (client.Email == null)
-            {
-                NotFound();
-            }
-            return View(_dbContext.Clients.Where(x =>x.Email == client.Email));
+            ViewBag.currentUser = HttpContext.Session.GetString("Name");
+            var item = _dbContext.Rooms.AsNoTracking().OrderBy(x => x.RoomId);
+            var model = await PagingList.CreateAsync(item, 4, page);
+            return View(model);
         }
-
         /// <summary>
         /// Kthen view per login
         /// </summary>
@@ -110,7 +92,8 @@ namespace APIAbooking.Controllers
         public async Task<IActionResult> Login(Client client)
         {
             var result = _clientService.Login(client.Email, client.Password);
-           
+            HttpContext.Session.SetString("Name", result.Name+ " "+ result.Lastname);
+            //ViewBag.currentUser = HttpContext.Session.GetString("Name");
             if(result == null)
             {
                 ModelState.AddModelError("Password", _localizer["Email or password are wrong, enter again"].ToString());
@@ -118,7 +101,7 @@ namespace APIAbooking.Controllers
             }
             else
             {
-                return RedirectToAction("HomePage", result);
+                return RedirectToAction("Index");
             }
             return View(result);
         }

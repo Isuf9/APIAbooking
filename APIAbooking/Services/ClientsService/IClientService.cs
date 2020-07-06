@@ -31,6 +31,6 @@ namespace APIAbooking.Services
 
         public string DecryptPassword(string password, Encoding encoding);
 
-        //public string CurrentUser(Client client);
+       // IQueryable<Room> Rooms();
     }
 }

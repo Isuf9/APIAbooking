@@ -1,5 +1,6 @@
 ﻿using APIAbooking.Models;
 using APIAbooking.Services;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -126,5 +127,34 @@ namespace APIAbooking.Logic.Client
             _dbContext.SaveChangesAsync();
         }
 
+        //public IQueryable<Room> Rooms()
+        //{
+        //    return _dbContext.Rooms
+        //                        .Select(x => new Room
+        //                        {
+
+        //                            RoomId = x.RoomId,
+        //                            MaxGuest = x.MaxGuest,
+        //                            NrBathroom = x.NrBathroom,
+        //                            Longtitude = x.Longtitude,
+        //                            Latitude = x.Latitude,
+        //                            Country = x.Country,
+        //                            Street = x.Street,
+        //                            City = x.City,
+        //                            NoHouse = x.NoHouse,
+        //                            Zip = x.Zip,
+        //                            WhatSpaceCanUseGuests = x.WhatSpaceCanUseGuests,
+        //                            SpecialItem = x.SpecialItem,
+        //                            Photo = x.Photo,
+        //                            Describe = x.Describe,
+        //                            PhoneNumber = x.PhoneNumber,
+        //                            NoticeGuest = x.NoticeGuest,
+        //                            Checkin = x.Checkin,
+        //                            Checkout = x.Checkout,
+        //                            Reserved = x.Reserved,
+        //                            Price = x.Price,
+        //                            OwnerIdFk = x.OwnerIdFk
+        //                        }).AsNoTracking();
+        //}
     }
 }

@@ -6,6 +6,8 @@ using APIAbooking.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Localization;
+using ReflectionIT.Mvc.Paging;
+
 namespace APIAbooking.Controllers
 {
     public class RoomController : Controller
@@ -15,9 +17,12 @@ namespace APIAbooking.Controllers
         {
             _dbContext = db;
         }
-        public IActionResult Index()
+
+        public async Task<IActionResult> Index(int page = 1)
         {
-            return View();
+            var item = _dbContext.Rooms.AsNoTracking().OrderBy(x => x.Price);
+            var model = await PagingList<Room>.CreateAsync(item, 4, page);
+            return View(model);
         }
 
         public IActionResult Create() => View(nameof(Create));

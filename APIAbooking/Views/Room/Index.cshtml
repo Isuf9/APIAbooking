@@ -2,9 +2,9 @@
 @addTagHelper *, ReflectionIT.Mvc.Paging
 @model ReflectionIT.Mvc.Paging.PagingList<APIAbooking.Models.Room>
 
-    <nav aria-label="Room Paging"> 
-        @await this.Component.InvokeAsync("Pager", new { pagingList = this.Model })
-    </nav>
+<nav aria-label="Room Paging">
+    @await this.Component.InvokeAsync("Pager", new { pagingList = this.Model })
+</nav>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -24,33 +24,29 @@
             <th> @Html.DisplayNameFor(model => model.Checkout)</th>
             <th> @Html.DisplayNameFor(model => model.Price)</th>
             <th> @Html.DisplayNameFor(model => model.Reserved)</th>
-            <th> @Html.DisplayNameFor(model => model.OwnerIdFk)</th>
-            <th> @Html.DisplayNameFor(model => model.OwnerIdFkNavigation)</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-        <tr>
-            <td>@item.MaxGuest</td>
-            <td>@item.NrBathroom</td>
-            <td>@item.Country</td>
-            <td>@item.Street</td>
-            <td>@item.City</td>
-            <td>@item.NoHouse</td>
-            <td>@item.Zip</td>
-            <td>@item.WhatSpaceCanUseGuests</td>
-            <td>@item.SpecialItem</td>
-            <td>@item.Photo</td>
-            <td>@item.Describe</td>
-            <td>@item.PhoneNumber</td>
-            <td>@item.Checkin</td>
-            <td>@item.Checkout</td>
-            <td>@item.Price</td>
-            <td>@item.Reserved</td>
-            <td>@item.OwnerIdFk</td>
-            <td>@item.OwnerIdFkNavigation</td>
-        </tr>
+            <tr>
+                <td>@item.MaxGuest</td>
+                <td>@item.NrBathroom</td>
+                <td>@item.Country</td>
+                <td>@item.Street</td>
+                <td>@item.City</td>
+                <td>@item.NoHouse</td>
+                <td>@item.Zip</td>
+                <td>@item.WhatSpaceCanUseGuests</td>
+                <td>@item.SpecialItem</td>
+                <td>@item.Photo</td>
+                <td>@item.Describe</td>
+                <td>@item.PhoneNumber</td>
+                <td>@item.Checkin</td>
+                <td>@item.Checkout</td>
+                <td>@item.Price</td>
+                <td>@item.Reserved</td>
+            </tr>
         }
     </tbody>
 </table>
