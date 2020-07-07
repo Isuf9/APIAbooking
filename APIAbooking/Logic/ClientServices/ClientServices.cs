@@ -30,7 +30,7 @@ namespace APIAbooking.Logic.Client
                 }
                 else
                 {
-                    
+
                 }
             }
             catch (ArgumentNullException ex)
@@ -45,7 +45,7 @@ namespace APIAbooking.Logic.Client
             return client;
         }
 
-       
+
 
         public Models.Client Delete(string id)
         {
@@ -65,11 +65,11 @@ namespace APIAbooking.Logic.Client
             return client;
         }
 
-         public string DecryptPassword(string password, Encoding encoding)
-         {
-             var result = Convert.FromBase64String(password);
-             return encoding.GetString(result);
-         }
+        public string DecryptPassword(string password, Encoding encoding)
+        {
+            var result = Convert.FromBase64String(password);
+            return encoding.GetString(result);
+        }
 
         public string EncryptPassword(Encoding encoding, string password)
         {
@@ -85,11 +85,11 @@ namespace APIAbooking.Logic.Client
             return id;
         }
 
-        public  Models.Client GetById(string id_client)
+        public Models.Client GetById(string id_client)
         {
-            if(id_client == null) { return null; }
-            var client =  _dbContext.Clients.Find(id_client);
-            return client; 
+            if (id_client == null) { return null; }
+            var client = _dbContext.Clients.Find(id_client);
+            return client;
         }
 
         public bool IfEmailExist(string email)
@@ -110,9 +110,9 @@ namespace APIAbooking.Logic.Client
 
         public Models.Client Login(string email, string password)
         {
-           var result = _dbContext.Clients
-                    .Where(x => x.Email == email && x.Password == password)
-                    .FirstOrDefault();
+            var result = _dbContext.Clients
+                     .Where(x => x.Email == email && x.Password == password)
+                     .FirstOrDefault();
 
             return result;
         }
@@ -127,34 +127,5 @@ namespace APIAbooking.Logic.Client
             _dbContext.SaveChangesAsync();
         }
 
-        //public IQueryable<Room> Rooms()
-        //{
-        //    return _dbContext.Rooms
-        //                        .Select(x => new Room
-        //                        {
-
-        //                            RoomId = x.RoomId,
-        //                            MaxGuest = x.MaxGuest,
-        //                            NrBathroom = x.NrBathroom,
-        //                            Longtitude = x.Longtitude,
-        //                            Latitude = x.Latitude,
-        //                            Country = x.Country,
-        //                            Street = x.Street,
-        //                            City = x.City,
-        //                            NoHouse = x.NoHouse,
-        //                            Zip = x.Zip,
-        //                            WhatSpaceCanUseGuests = x.WhatSpaceCanUseGuests,
-        //                            SpecialItem = x.SpecialItem,
-        //                            Photo = x.Photo,
-        //                            Describe = x.Describe,
-        //                            PhoneNumber = x.PhoneNumber,
-        //                            NoticeGuest = x.NoticeGuest,
-        //                            Checkin = x.Checkin,
-        //                            Checkout = x.Checkout,
-        //                            Reserved = x.Reserved,
-        //                            Price = x.Price,
-        //                            OwnerIdFk = x.OwnerIdFk
-        //                        }).AsNoTracking();
-        //}
     }
 }

@@ -70,6 +70,7 @@ namespace APIAbooking.Controllers
         //[Route("clients/homepage/ClientId")]
         public async Task<IActionResult> Index(int page = 1)
         {
+            
             ViewBag.currentUser = HttpContext.Session.GetString("Name");
             var item = _dbContext.Rooms.AsNoTracking().OrderBy(x => x.RoomId);
             var model = await PagingList.CreateAsync(item, 4, page);
@@ -88,10 +89,9 @@ namespace APIAbooking.Controllers
         /// <param name="_client"></param>
         /// <returns></returns>
         [HttpPost]
-       // [Route("clients/login/clientId")]
-        public async Task<IActionResult> Login(Client client)
+        public IActionResult Login(Client client)
         {
-            var result = _clientService.Login(client.Email, client.Password);
+            var result =  _clientService.Login(client.Email, client.Password);
             
             if(result == null)
             {
@@ -118,7 +118,7 @@ namespace APIAbooking.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        //[HttpPost]
+        [HttpPost]
         public IActionResult Create(Client client)
         {
 
@@ -144,7 +144,7 @@ namespace APIAbooking.Controllers
                 }
 
 
-                return RedirectToAction("HomePage", client);
+                return RedirectToAction("Index", client);
             }
             return View(client);
         }
@@ -162,7 +162,7 @@ namespace APIAbooking.Controllers
                 NotFound("404 error");
             }
 
-            var client = _dbContext.Clients.Find(id);
+            var client = _clientService.Edit(id);
 
             if (client == null)
             {

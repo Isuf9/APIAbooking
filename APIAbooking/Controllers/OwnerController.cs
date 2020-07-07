@@ -1,20 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using APIAbooking.Models;
+using APIAbooking.Services.OwnerService;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 
 namespace APIAbooking.Controllers
 {
     public class OwnerController : Controller
     {
         private readonly APIAbookingContext _dbContext;
-
-        public OwnerController(APIAbookingContext db)
+        private readonly IOwnerService _ownerService;
+        private readonly IStringLocalizer<OwnerController> _localizer;
+        public OwnerController(
+            APIAbookingContext db,
+            IOwnerService ownerService,
+            IStringLocalizer<OwnerController> localizer)
         {
             _dbContext = db;
+            _ownerService = ownerService;
+            _localizer = localizer;
         }
         public IActionResult Dashboard(RoomOwner owner)
         {
@@ -30,29 +40,23 @@ namespace APIAbooking.Controllers
         public IActionResult Login() => View(nameof(Login));
 
         [HttpPost]
-        public IActionResult Login(RoomOwner _owner)
+        public IActionResult Login(RoomOwner owner)
         {
+            var result = _ownerService.Login(owner.Email, owner.Password);
             if (ModelState.IsValid)
             {
-                if (_owner.OwnerId == null)
+                if (result == null)
                 {
-                    NotFound();
+                    ModelState.AddModelError("Password", _localizer["Email or password are wrong, enter again"].ToString());
+                    return View(result);
+                }
+                else
+                {
+                    HttpContext.Session.SetString("Name", result.Name + " " + result.Lastname);
+                    return RedirectToAction("Dashbard");
                 }
             }
-
-            var _EmailOwner = _dbContext.RoomOwners.Where(x => x.Email == _owner.Email).FirstOrDefault();
-
-            var _PasswordOwner = _dbContext.RoomOwners.Where(x => x.Email == _owner.Password).FirstOrDefault();
-
-            if (_EmailOwner == null && _PasswordOwner == null)
-            {
-                return View(nameof(Login));
-            }
-            else
-            {
-                return RedirectToAction("Dashboard",_owner);
-            }
-            return View(_owner);
+            return View(owner);
         }
 
         public IActionResult Create() => View(nameof(Create));
@@ -60,16 +64,24 @@ namespace APIAbooking.Controllers
         [HttpPost]
         public IActionResult Create(RoomOwner owner)
         {
-
             if (ModelState.IsValid)
             {
+                owner.OwnerId = _ownerService.GenerateIdRandom(owner.OwnerId);
                 if (owner.OwnerId != null)
                 {
-                    _dbContext.RoomOwners.Add(owner);
+                    var result = _ownerService.IfEmailExist(owner.Email);
+                    if (result == false)
+                    {
+                        owner.Password = _ownerService.EncryptPassword(Encoding.UTF8, owner.Password);
+                        _ownerService.Create(owner);
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("Email", _localizer["Now this email is used, please enter a new!"].ToString());
+                        return View(owner);
+                    }
                 }
-
-                _dbContext.SaveChanges();
-                return RedirectToAction("Dashboard", owner);
+                return RedirectToAction("HomePage", owner);
             }
             return View(owner);
         }

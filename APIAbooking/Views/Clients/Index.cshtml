@@ -2,9 +2,7 @@
 @addTagHelper *, ReflectionIT.Mvc.Paging
 @model ReflectionIT.Mvc.Paging.PagingList<APIAbooking.Models.Room>
 
-    <nav aria-label="Room Paging"> 
-        @await this.Component.InvokeAsync("Pager", new { pagingList = this.Model })
-    </nav>
+@*<a asp-action="PersonalInfo" asp-route-id="idClient">Personal info</a>*@
 <table class="table table-striped">
     <thead>
         <tr>
