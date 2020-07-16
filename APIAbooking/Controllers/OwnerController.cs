@@ -1,30 +1,46 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using APIAbooking.Models;
+using APIAbooking.Services;
 using APIAbooking.Services.OwnerService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Localization;
+using ReflectionIT.Mvc.Paging;
 
 namespace APIAbooking.Controllers
 {
     public class OwnerController : Controller
     {
         private readonly APIAbookingContext _dbContext;
+        private readonly IService _iService;
         private readonly IOwnerService _ownerService;
         private readonly IStringLocalizer<OwnerController> _localizer;
+
+        #region Constructor
         public OwnerController(
             APIAbookingContext db,
+            IService service,
             IOwnerService ownerService,
             IStringLocalizer<OwnerController> localizer)
         {
             _dbContext = db;
             _ownerService = ownerService;
             _localizer = localizer;
+        }
+        #endregion
+        #region Action Method
+        
+        [HttpGet]
+        //[Route("clients/homepage/ClientId")]
+        public async Task<IActionResult> Index(int page = 1)
+        {
+            ViewBag.currentUser = HttpContext.Session.GetString("Name");
+            var item = _dbContext.Rooms.AsNoTracking().OrderBy(x => x.RoomId);
+            var model = await PagingList.CreateAsync(item, 4, page);
+            return View(model);
         }
         public IActionResult Dashboard(RoomOwner owner)
         {
@@ -36,7 +52,7 @@ namespace APIAbooking.Controllers
         }
 
         //public IActionResult CreateRoom(Room room) => View();
-
+        [HttpGet]
         public IActionResult Login() => View(nameof(Login));
 
         [HttpPost]
@@ -165,4 +181,5 @@ namespace APIAbooking.Controllers
         }
 
     }
+    #endregion
 }

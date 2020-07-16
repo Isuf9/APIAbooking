@@ -11,7 +11,8 @@ namespace APIAbooking.Services
         TEntity Create(TEntity entity);
         TEntity Edit(TEntity entity);
         void Delete(TEntity entity);
-       
+        //TEntity GetById(string id);
+        void SaveAsync();
         void Save();
         
     }

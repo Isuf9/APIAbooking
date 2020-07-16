@@ -24,7 +24,7 @@ namespace APIAbooking.Models
         public DateTime? Checkout { get; set; }
         public DateTime? Checkin { get; set; }
         public bool? Reserved { get; set; }
-        public decimal? Price { get; set; }
+        public decimal Price { get; set; }
         public string OwnerIdFk { get; set; }
 
         public virtual RoomOwner OwnerIdFkNavigation { get; set; }

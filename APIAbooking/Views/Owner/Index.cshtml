@@ -1,0 +1,63 @@
+﻿@using ReflectionIT.Mvc.Paging
+@addTagHelper *, ReflectionIT.Mvc.Paging
+@model ReflectionIT.Mvc.Paging.PagingList<APIAbooking.Models.Room>
+
+
+<a class="btn btn-success" asp-action="Create" asp-controller="Room" asp-route-id="1">Create a new post</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th> @Html.DisplayNameFor(model => model.MaxGuest)</th>
+            <td> @Html.DisplayNameFor(model => model.NrBathroom)</td>
+            <th> @Html.DisplayNameFor(model => model.Country)</th>
+            <th> @Html.DisplayNameFor(model => model.Street)</th>
+            <th> @Html.DisplayNameFor(model => model.City)</th>
+            <th> @Html.DisplayNameFor(model => model.NoHouse)</th>
+            <th> @Html.DisplayNameFor(model => model.Zip)</th>
+            <th> @Html.DisplayNameFor(model => model.WhatSpaceCanUseGuests)</th>
+            <th> @Html.DisplayNameFor(model => model.SpecialItem)</th>
+            <th> @Html.DisplayNameFor(model => model.Photo)</th>
+            <th> @Html.DisplayNameFor(model => model.Describe)</th>
+            <th> @Html.DisplayNameFor(model => model.PhoneNumber)</th>
+            <th> @Html.DisplayNameFor(model => model.Checkin)</th>
+            <th> @Html.DisplayNameFor(model => model.Checkout)</th>
+            <th> @Html.DisplayNameFor(model => model.Price)</th>
+            <th> @Html.DisplayNameFor(model => model.Reserved)</th>
+            <th> @Html.DisplayNameFor(model => model.OwnerIdFk)</th>
+            <th> @Html.DisplayNameFor(model => model.OwnerIdFkNavigation)</th>
+            <th> Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.MaxGuest</td>
+                <td>@item.NrBathroom</td>
+                <td>@item.Country</td>
+                <td>@item.Street</td>
+                <td>@item.City</td>
+                <td>@item.NoHouse</td>
+                <td>@item.Zip</td>
+                <td>@item.WhatSpaceCanUseGuests</td>
+                <td>@item.SpecialItem</td>
+                <td>@item.Photo</td>
+                <td>@item.Describe</td>
+                <td>@item.PhoneNumber</td>
+                <td>@item.Checkin</td>
+                <td>@item.Checkout</td>
+                <td>@item.Price</td>
+                <td>@item.Reserved</td>
+                <td>@item.OwnerIdFk</td>
+                <td>@item.OwnerIdFkNavigation</td>
+                <td>
+                    <a class="btn btn-success" asp-action="Edit" asp-controller="Room" asp-route="@item.RoomId">Edit</a>
+                    <a class="btn btn-danger" asp-action="Edit" asp-controller="Room" asp-route="@item.RoomId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+<nav aria-label="Suppliers navigation example">
+    <vc:pager paging-list="@Model" />
+</nav>

@@ -7,65 +7,90 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Localization;
 using ReflectionIT.Mvc.Paging;
+using APIAbooking.Services.RoomService;
+using APIAbooking.Services;
 
 namespace APIAbooking.Controllers
 {
     public class RoomController : Controller
     {
-        private APIAbookingContext _dbContext;
-        public RoomController(APIAbookingContext db)
+        private readonly APIAbookingContext _dbContext;
+        private readonly IService _iService;
+        private readonly IRoomService _roomService;
+        public RoomController
+            (APIAbookingContext db,
+            IService service,
+            IRoomService room
+            )
         {
             _dbContext = db;
+            _iService = service;
+            _roomService = room;
         }
 
-        public async Task<IActionResult> Index(int page = 1)
+        //public async Task<IActionResult> Index(int page = 1)
+        //{
+        //    var item = _dbContext.Rooms.AsNoTracking().OrderBy(x => x.Price);
+        //    var model = await PagingList<Room>.CreateAsync(item, 4, page);
+        //    return View(model);
+        //}
+
+        
+        public  IActionResult Booking(string id)
         {
-            var item = _dbContext.Rooms.AsNoTracking().OrderBy(x => x.Price);
-            var model = await PagingList<Room>.CreateAsync(item, 4, page);
-            return View(model);
+            if(id == null)
+            {
+                var iid = @ViewBag.Id;
+                NotFound();
+                return null;
+            }
+            else
+            {
+                //book.RoomIdFk = id;
+                //book.ClientIdFk = @ViewBag.Id;
+                //book.TypeIdFk = "1";
+                //var bookings = _dbContext.Bookings.Add(book);
+                return View();
+            }
         }
+
 
         public IActionResult Create() => View(nameof(Create));
 
         [HttpPost]
-        public IActionResult Create(string? id, Room room)
+        public IActionResult Create(Room room)
         {
-            if(room.RoomId == null)
+           if(room != null)
             {
-                NotFound();
+                var result = _roomService.Create(room);
+                return View(result);
             }
             else
             {
-                room.OwnerIdFk = id;
-                _dbContext.Rooms.Add(room);
-                _dbContext.SaveChanges();
-
-                return RedirectToAction("Dashboard", "RoomOwner");
+                return View();
             }
-            return View(room);
         }
 
-        public IActionResult GetAllPost(string owner_id) => View(_dbContext.Rooms.Where(x => x.OwnerIdFk == owner_id));
+        //public IActionResult GetAllPost(string owner_id) => View(_dbContext.Rooms.Where(x => x.OwnerIdFk == owner_id));
 
 
 
-        [HttpGet]
-        public async Task<IActionResult> Edit(string? id)
-        {
+        //[HttpGet]
+        //public async Task<IActionResult> Edit(string id)
+        //{
+        //    if (id == null)
+        //    {
+        //        NotFound("404 error");
+        //    }
 
-            if (id == null)
-            {
-                NotFound("404 error");
-            }
+        //    var client = _dbContext.Rooms.Find(id);
 
-            var client = _dbContext.Rooms.Find(id);
-
-            if (client == null)
-            {
-                NotFound("404 error");
-            }
-            return View(client);
-        }
+        //    if (client == null)
+        //    {
+        //        NotFound("404 error");
+        //    }
+        //    return View(client);
+        //}
 
         /// <summary>
         /// I ndryshon te dhenat e useri pasi aij te klikon buttonin update...
@@ -74,94 +99,44 @@ namespace APIAbooking.Controllers
         /// <param name="client"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Edit(string id,  Room room)
+        public async Task<IActionResult> Edit(string id)
         {
-            if (room.RoomId == null)
-            {
-                NotFound();
-            }
-
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _dbContext.Rooms.Update(room);
-                    await _dbContext.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (room.RoomId == null)
+               if (id != null)
                     {
-                        return NotFound();
+                       var room = _roomService.Edit(id);
+
+                       return RedirectToAction("GetAllPost", "Room");
                     }
-                    else
+               else
                     {
-                        throw;
+                       return View();
                     }
                 }
-                return RedirectToAction("GetAllPost", "Room");
-            }
-            return View(room);
+            return RedirectToAction("GetAllPost", "Room");
         }
-  
-
-
-
+     
     
-            [HttpGet]
-            public IActionResult Delete(string id)
-            {
+    [HttpGet]
+    public IActionResult Delete(string id)
+    {
 
-                if (id == null)
+        if(ModelState.IsValid)
+        {
+                if (id != null)
                 {
-                    NotFound("404 error");
-                }
+                    var room = _roomService.Delete(id);
 
-                var room = _dbContext.Rooms.Find(id);
-
-                if (room == null)
-                {
-                    NotFound("404 error");
-                }
-                return View(room);
-            }
-
-            /// <summary>
-            /// I ndryshon te dhenat e useri pasi aij te klikon buttonin update...
-            /// </summary>
-            /// <param name="id"></param>
-            /// <param name="client"></param>
-            /// <returns></returns>
-            [HttpPost]
-            public IActionResult Delete(string id, Room room)
-            {
-                if (room.RoomId == null)
-                {
-                    NotFound();
-                }
-
-                if (ModelState.IsValid)
-                {
-                    try
-                    {
-                         _dbContext.Rooms.Remove(room);
-                         _dbContext.SaveChangesAsync();
-                    }
-                    catch (DbUpdateConcurrencyException)
-                    {
-                        if (room.RoomId == null)
-                        {
-                            return NotFound();
-                        }
-                        else
-                        {
-                            throw;
-                        }
-                    }
                     return RedirectToAction("GetAllPost", "Room");
                 }
-                return View(room);
-            }
-
+                else
+                {
+                    return View();
+                }
+        }
+        
+        return RedirectToAction("GetAllPost", "Room");
+    }
     }
 }

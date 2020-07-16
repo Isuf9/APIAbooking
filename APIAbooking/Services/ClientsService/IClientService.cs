@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace APIAbooking.Services
 {
-    public interface IClientService
+    public interface IClientService : IService
     {
         
         Client GetById(string id_client);

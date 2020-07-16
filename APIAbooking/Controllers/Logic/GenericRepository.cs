@@ -11,12 +11,13 @@ namespace APIAbooking.Logic
     public class GenericRepository<TEntity> : IRepositoryEntity<TEntity> where TEntity : class
     {
         private APIAbookingContext _dbContext;
-        private readonly ClientServices _clientService;
-        public GenericRepository(APIAbookingContext db, ClientServices clientServices)
+        
+        public GenericRepository(APIAbookingContext db)
         {
             _dbContext = db;
-            _clientService = clientServices;
         }
+
+
         public TEntity Create(TEntity entity)
         {
             _dbContext.Add(entity);
@@ -39,13 +40,21 @@ namespace APIAbooking.Logic
             return entity;
         }
 
-       
+        //public TEntity GetById(string id)
+        //{
+        //    //if (id == null) return null;
+        //    //var entity = _dbContext.Find(id);
+        //    return id;
+        //}
 
         public void Save()
         {
             _dbContext.SaveChanges();
         }
 
-        
+        public void SaveAsync()
+        {
+            _dbContext.SaveChangesAsync();
+        }
     }
 }
