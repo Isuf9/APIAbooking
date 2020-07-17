@@ -8,7 +8,7 @@ namespace APIAbooking.Models
         public string ExplorerIdFk { get; set; }
         public string ClientIdFk { get; set; }
 
-        public virtual Client ClientIdFkNavigation { get; set; }
+        public virtual ClientServices ClientIdFkNavigation { get; set; }
         public virtual Explore ExplorerIdFkNavigation { get; set; }
     }
 }

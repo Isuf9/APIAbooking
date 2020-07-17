@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace APIAbooking.Models
 {
-    public partial class Client
+    public partial class ClientServices
     {
-        public Client()
+        public ClientServices()
         {
             Bookings = new HashSet<Booking>();
         }

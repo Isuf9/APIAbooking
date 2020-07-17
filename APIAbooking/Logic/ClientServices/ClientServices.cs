@@ -38,7 +38,7 @@ namespace APIAbooking.Logic.Client
             }
         }
 
-        public Models.Client Create(Models.Client client)
+        public Models.ClientServices Create(Models.ClientServices client)
         {
             _dbContext.Add(client);
             Save();
@@ -47,7 +47,7 @@ namespace APIAbooking.Logic.Client
 
 
 
-        public Models.Client Delete(string id)
+        public Models.ClientServices Delete(string id)
         {
             var client = GetById(id);
             _dbContext.Remove(client);
@@ -56,7 +56,7 @@ namespace APIAbooking.Logic.Client
             return client;
         }
 
-        public Models.Client Edit(string id)
+        public Models.ClientServices Edit(string id)
         {
             var client = GetById(id);
             _dbContext.Update(client);
@@ -85,7 +85,7 @@ namespace APIAbooking.Logic.Client
             return id;
         }
 
-        public Models.Client GetById(string id_client)
+        public Models.ClientServices GetById(string id_client)
         {
             if (id_client == null) { return null; }
             var client = _dbContext.Clients.Find(id_client);
@@ -108,7 +108,7 @@ namespace APIAbooking.Logic.Client
             return false;
         }
 
-        public Models.Client Login(string email, string password)
+        public Models.ClientServices Login(string email, string password)
         {
             //string pasi = EncryptPassword(Encoding , password);
             var result = _dbContext.Clients

@@ -19,7 +19,7 @@ namespace APIAbooking.Models
         public virtual DbSet<Booking> Bookings { get; set; }
         public virtual DbSet<CanAddExplorer> CanAddExplorers { get; set; }
         public virtual DbSet<CancelBooking> CancelBookings { get; set; }
-        public virtual DbSet<Client> Clients { get; set; }
+        public virtual DbSet<ClientServices> Clients { get; set; }
         public virtual DbSet<Explore> Explores { get; set; }
         public virtual DbSet<Food> Foods { get; set; }
         public virtual DbSet<Place> Places { get; set; }
@@ -182,7 +182,7 @@ namespace APIAbooking.Models
                     .HasConstraintName("FK__cancel_bo__type___2739D489");
             });
 
-            modelBuilder.Entity<Client>(entity =>
+            modelBuilder.Entity<ClientServices>(entity =>
             {
                 entity.ToTable("client");
 

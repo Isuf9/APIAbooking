@@ -104,7 +104,7 @@ namespace APIAbooking.Controllers
         
 
         [HttpPost]
-        public IActionResult Login(Client client)
+        public IActionResult Login(ClientServices client)
         {
             var result =  _clientService.Login(client.Email, client.Password);
             
@@ -139,7 +139,7 @@ namespace APIAbooking.Controllers
 
 
         [HttpPost]
-        public IActionResult Create(Client client)
+        public IActionResult Create(ClientServices client)
         {
             if (ModelState.IsValid)
             {

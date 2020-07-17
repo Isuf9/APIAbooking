@@ -10,15 +10,15 @@ namespace APIAbooking.Services
     public interface IClientService : IService
     {
         
-        Client GetById(string id_client);
+        ClientServices GetById(string id_client);
 
         public bool IfEmailExist(string email);
 
-        public Client Login(string email, string password);
+        public ClientServices Login(string email, string password);
 
-        public Client Create(Client client);
-        public Client Edit(string id);
-        public Client Delete(string id);
+        public ClientServices Create(ClientServices client);
+        public ClientServices Edit(string id);
+        public ClientServices Delete(string id);
        
         public void Save();
         public void SaveAsync();
