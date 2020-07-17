@@ -58,6 +58,7 @@ namespace APIAbooking.Controllers
         [HttpPost]
         public IActionResult Login(RoomOwner owner)
         {
+            //_ownerService.EncryptPassword(Encoding , owner.Password);
             var result = _ownerService.Login(owner.Email, owner.Password);
             if (ModelState.IsValid)
             {

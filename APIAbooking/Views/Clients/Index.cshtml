@@ -1,4 +1,5 @@
 ﻿@using ReflectionIT.Mvc.Paging
+@using APIAbooking.Models
 @addTagHelper *, ReflectionIT.Mvc.Paging
 @model ReflectionIT.Mvc.Paging.PagingList<APIAbooking.Models.Room>
 @*<a asp-action="PersonalInfo" asp-route-id="idClient">Personal info</a>*@
@@ -16,21 +17,26 @@
     <div class="card card-outline-primary m-1 p-1">
         <div class="bg-faded p-1">
             <h4>
-                <a asp-action="Booking" asp-controller="Room"  asp-route-id="@item.RoomId"> @item.City, @item.Country</a>
+                @*@{
+                    var parms = new Dictionary<string, string>
+                    {
+                { "roomid", item.RoomId },
+                { "clientid", ViewBag.Id }
+            };
+                }*@
+                <a asp-action="Booking" asp-controller="Room" asp-route-id="@item.RoomId"> @item.City, @item.Country</a>
                 <span class="badge badge-pill badge-primary" style="float:right">
                     <small>@item.Price.ToString("c")</small>
                 </span>
             </h4>
         </div>
-        <form id="@item.RoomId" asp-action="Booking"
-              asp-controller="Room" method="post">
-          
-                @item.Describe
-                <button type="submit asp-action="Booking" asp-controller="Room"  asp-route-id="@item.RoomId"
-                        class="btn btn-success btn-sm pull-right" style="float:right">
-                    Add To Cart
-                </button>
-        </form>
+        <div>
+            @item.Describe
+            <button type="submit asp-action="Booking" asp-controller="Room" asp-route-id="@item.RoomId"
+                    class="btn btn-success btn-sm pull-right" style="float:right">
+                Add To Cart
+            </button>
+        </div>
     </div>
 }
 <nav aria-label="Suppliers navigation example">

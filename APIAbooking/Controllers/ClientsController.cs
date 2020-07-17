@@ -54,10 +54,11 @@ namespace APIAbooking.Controllers
         public async Task<IActionResult> Index(int page = 1)
         {
             ViewBag.currentUser = HttpContext.Session.GetString("Name");
-            ViewBag.id = HttpContext.Session.GetString("Id");
-            var item = _dbContext.Rooms.AsNoTracking().OrderBy(x => x.RoomId);
+            ViewBag.Id = HttpContext.Session.GetString("Id");
+            var item = _dbContext.Rooms.AsNoTracking().OrderBy(x => x.Price);
             var model = await PagingList.CreateAsync(item, 4, page);
-            return View(model);
+            
+            return View(nameof(Index), model);
         }
 
         public IActionResult Detalist(string id)

@@ -72,13 +72,24 @@ namespace APIAbooking.Models
 
             modelBuilder.Entity<Booking>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.BookId)
+                    .HasName("PK__booking__490D1AE1D843DA4E");
 
                 entity.ToTable("booking");
+
+                entity.Property(e => e.BookId)
+                    .HasColumnName("book_id")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.ClientIdFk)
                     .HasColumnName("client_id_fk")
                     .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.NumberOfBooking)
+                    .HasColumnName("number_of_booking")
+                    .HasMaxLength(100)
                     .IsUnicode(false);
 
                 entity.Property(e => e.RoomIdFk)
@@ -92,17 +103,17 @@ namespace APIAbooking.Models
                     .IsUnicode(false);
 
                 entity.HasOne(d => d.ClientIdFkNavigation)
-                    .WithMany()
+                    .WithMany(p => p.Bookings)
                     .HasForeignKey(d => d.ClientIdFk)
                     .HasConstraintName("FK__booking__client___29221CFB");
 
                 entity.HasOne(d => d.RoomIdFkNavigation)
-                    .WithMany()
+                    .WithMany(p => p.Bookings)
                     .HasForeignKey(d => d.RoomIdFk)
                     .HasConstraintName("FK__booking__room_id__2A164134");
 
                 entity.HasOne(d => d.TypeIdFkNavigation)
-                    .WithMany()
+                    .WithMany(p => p.Bookings)
                     .HasForeignKey(d => d.TypeIdFk)
                     .HasConstraintName("FK__booking__type_id__2B0A656D");
             });
@@ -204,10 +215,6 @@ namespace APIAbooking.Models
                     .HasColumnName("profile_picture")
                     .HasColumnType("image");
 
-                //entity.Property(e => e.IsExist)
-                //    .HasColumnName("profile_picture")
-                //    .HasColumnType("image");
-
                 entity.Property(e => e.TypeOfUser).HasColumnName("type_of_user");
             });
 
@@ -294,6 +301,11 @@ namespace APIAbooking.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Category)
+                    .HasColumnName("category")
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Checkin)
                     .HasColumnName("checkin")
                     .HasColumnType("datetime");
@@ -323,14 +335,17 @@ namespace APIAbooking.Models
 
                 entity.Property(e => e.MaxGuest).HasColumnName("max_guest");
 
+                entity.Property(e => e.NameOfRoom)
+                    .HasColumnName("name_of_room")
+                    .HasMaxLength(200)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.NoHouse).HasColumnName("no_house");
 
                 entity.Property(e => e.NoticeGuest)
                     .HasColumnName("notice_guest")
                     .HasMaxLength(500)
                     .IsUnicode(false);
-
-                
 
                 entity.Property(e => e.NrBathroom).HasColumnName("nr_bathroom");
 
@@ -346,7 +361,8 @@ namespace APIAbooking.Models
 
                 entity.Property(e => e.Photo)
                     .HasColumnName("photo")
-                    .HasColumnType("image");
+                    .HasMaxLength(500)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Price)
                     .HasColumnName("price")

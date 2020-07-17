@@ -110,6 +110,7 @@ namespace APIAbooking.Logic.Client
 
         public Models.Client Login(string email, string password)
         {
+            //string pasi = EncryptPassword(Encoding , password);
             var result = _dbContext.Clients
                      .Where(x => x.Email == email && x.Password == password)
                      .FirstOrDefault();

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Localization;
 using ReflectionIT.Mvc.Paging;
 using APIAbooking.Services.RoomService;
 using APIAbooking.Services;
+using Microsoft.AspNetCore.Http;
 
 namespace APIAbooking.Controllers
 {
@@ -36,21 +37,24 @@ namespace APIAbooking.Controllers
         //}
 
         
-        public  IActionResult Booking(string id)
+        public  IActionResult Booking(string id, Booking book)
         {
+            id = null;
             if(id == null)
             {
-                var iid = @ViewBag.Id;
+              
                 NotFound();
                 return null;
             }
             else
             {
-                //book.RoomIdFk = id;
-                //book.ClientIdFk = @ViewBag.Id;
-                //book.TypeIdFk = "1";
-                //var bookings = _dbContext.Bookings.Add(book);
-                return View();
+                book.BookId = "3";
+                book.RoomIdFk = id;
+                book.ClientIdFk = HttpContext.Session.GetString("Id"); 
+                book.TypeIdFk = "3";
+                 _dbContext.Bookings.Add(book);
+                _dbContext.SaveChanges();
+                return View(_dbContext.Bookings);
             }
         }
 

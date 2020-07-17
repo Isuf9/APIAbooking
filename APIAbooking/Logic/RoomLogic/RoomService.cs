@@ -18,6 +18,12 @@ namespace APIAbooking.Logic.RoomLogic
             _dbContext = db;
          //   _genericRepository = repository;
         }
+
+        public Booking CancelBooking(string id, Booking book)
+        {
+            throw new NotImplementedException();
+        }
+
         public Room Create(Room room)
         {
             if(room != null)
@@ -30,6 +36,11 @@ namespace APIAbooking.Logic.RoomLogic
             {
                 return null;
             }
+        }
+
+        public Booking CreateBooking(string id, Booking book)
+        {
+            throw new NotImplementedException();
         }
 
         public bool Delete(string id)
@@ -68,6 +79,21 @@ namespace APIAbooking.Logic.RoomLogic
             if (id == null) { return null; }
             var client = _dbContext.Rooms.Find(id);
             return client;
+        }
+
+        public RoomOwner GetByIdClient(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public RoomOwner GetByIdOwner(string id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public RoomOwner GetByIdRoom(string id)
+        {
+            throw new NotImplementedException();
         }
 
         public void Save()

@@ -19,5 +19,13 @@ namespace APIAbooking.Services.RoomService
         void Save();
 
         void SaveChangesAsync();
+        RoomOwner GetByIdOwner(string id);
+        RoomOwner GetByIdRoom(string id);
+        RoomOwner GetByIdClient(string id);
+
+        Booking CreateBooking(string id, Booking book);
+
+        Booking CancelBooking(string id, Booking book);
+
     }
 }
