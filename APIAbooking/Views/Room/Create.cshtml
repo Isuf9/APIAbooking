@@ -13,9 +13,9 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="RoomId" class="control-label"></label>
-                <input asp-for="RoomId" class="form-control" />
-                <span asp-validation-for="RoomId" class="text-danger"></span>
+                <label asp-for="NameOfRoom" class="control-label">Name of room</label>
+                <input type="text" asp-for="NameOfRoom" class="form-control" />
+                <span asp-validation-for="NameOfRoom" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="MaxGuest" class="control-label"></label>
@@ -78,6 +78,11 @@
                 <span asp-validation-for="Photo" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Category" class="control-label"></label>
+                <input type="text" asp-for="Category" class="form-control" />
+                <span asp-validation-for="Category" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Describe" class="control-label"></label>
                 <input type="text" asp-for="Describe" class="form-control" />
                 <span asp-validation-for="Describe" class="text-danger"></span>
@@ -92,21 +97,15 @@
                 <input type="text" asp-for="NoticeGuest" class="form-control" />
                 <span asp-validation-for="NoticeGuest" class="text-danger"></span>
             </div>
-            
-            <div class="form-group">
-                <label asp-for="Checkout" class="control-label"></label>
-                <input asp-for="Checkout" class="form-control" />
-                <span asp-validation-for="Checkout" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <label asp-for="Checkin" class="control-label"></label>
                 <input asp-for="Checkin" class="form-control" />
                 <span asp-validation-for="Checkin" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Reserved" class="control-label"></label>
-                <input asp-for="Reserved" class="form-control" />
-                <span asp-validation-for="Reserved" class="text-danger"></span>
+                <label asp-for="Checkout" class="control-label"></label>
+                <input asp-for="Checkout" class="form-control" />
+                <span asp-validation-for="Checkout" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Price" class="control-label"></label>
@@ -114,8 +113,8 @@
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group">
-                
-                <input type="hidden" asp-for="OwnerIdFk" value="" class ="form-control" asp-items="ViewBag.OwnerIdFk"></input>
+
+                <input type="hidden" asp-for="OwnerIdFk" value="" class="form-control" asp-items="ViewBag.OwnerIdFk"></input>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

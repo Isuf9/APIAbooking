@@ -19,7 +19,7 @@ namespace APIAbooking.Models
         public virtual DbSet<Booking> Bookings { get; set; }
         public virtual DbSet<CanAddExplorer> CanAddExplorers { get; set; }
         public virtual DbSet<CancelBooking> CancelBookings { get; set; }
-        public virtual DbSet<ClientServices> Clients { get; set; }
+        public virtual DbSet<Client> Clients { get; set; }
         public virtual DbSet<Explore> Explores { get; set; }
         public virtual DbSet<Food> Foods { get; set; }
         public virtual DbSet<Place> Places { get; set; }
@@ -32,7 +32,7 @@ namespace APIAbooking.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=Tornado\\Arber; Database=APIAbooking_II; user id=sa; password=100200300");
+                optionsBuilder.UseSqlServer("Server=DESKTOP-1ORICPQ\\SQLSERVER; Database=APIAbooking_II; user id=sa; password=isufisuf");
             }
         }
 
@@ -182,7 +182,7 @@ namespace APIAbooking.Models
                     .HasConstraintName("FK__cancel_bo__type___2739D489");
             });
 
-            modelBuilder.Entity<ClientServices>(entity =>
+            modelBuilder.Entity<Client>(entity =>
             {
                 entity.ToTable("client");
 

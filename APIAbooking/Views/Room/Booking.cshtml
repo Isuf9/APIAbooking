@@ -1,6 +1,7 @@
-﻿@model IEnumerable<APIAbooking.Models.Booking>
+﻿@model APIAbooking.Models.Booking
 
 
-<h1>Thank you for use APIAbooking</h1>
-
-
+<h1>Thank you for using APIAbooking</h1>
+<h3>Your number of booking is <b>@Model.NumberOfBooking</b></h3>
+<h4><b>Important:</b>You dont need credit card because we are working for it, pay with cash when you finsh holiday</h4><br />
+<p>If you want to continue with booking click<a asp-action="Index" asp-controller="Client">here</a></p>

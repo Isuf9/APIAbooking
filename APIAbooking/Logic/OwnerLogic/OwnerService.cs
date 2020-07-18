@@ -78,8 +78,8 @@ namespace APIAbooking.Logic.OwnerLogic
 
         public string GenerateIdRandom(string id)
         {
-            var guid = Guid.NewGuid().ToString();
-            id = guid;
+            Random _random = new System.Random();
+            id = _random.Next(1, 100).ToString();
 
             return id;
         }

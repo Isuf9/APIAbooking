@@ -30,8 +30,8 @@ namespace APIAbooking
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().AddFluentValidation(mvcConfiguration => mvcConfiguration.RegisterValidatorsFromAssemblyContaining<Startup>());
-            services.AddTransient<IService, Logic.Client.ClientServices>();
-            services.AddTransient<IClientService, Logic.Client.ClientServices>();
+            services.AddTransient<IService, ClientServices>();
+            services.AddTransient<IClientService, ClientServices>();
             services.AddTransient<IOwnerService, OwnerService>();
             services.AddTransient<IRoomService, RoomService>();
             services.AddHttpContextAccessor();

@@ -14,7 +14,7 @@ namespace APIAbooking.Models
         public string ClientIdFk { get; set; }
         public DateTime? TimeBooking { get; set; }
 
-        public virtual ClientServices ClientIdFkNavigation { get; set; }
+        public virtual Client ClientIdFkNavigation { get; set; }
         public virtual ICollection<ReservationRoom> ReservationRooms { get; set; }
     }
 }

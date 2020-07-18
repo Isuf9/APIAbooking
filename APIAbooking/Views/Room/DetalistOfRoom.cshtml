@@ -1,0 +1,52 @@
+﻿@model IEnumerable<APIAbooking.Models.Room>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="~/css/" />
+</head>
+<body>
+    <header>  <h1>Information of room</h1></header>
+    <content>
+        @foreach (var item in Model)
+        {
+            <div>
+              
+
+                <div class="aboutroom">
+                    <br />
+                    <br />
+                    <h2>About room</h2>
+                    <p>Name of the room: <b>@item.NameOfRoom</b></p>
+                    <p>Number of room or house: <b>@item.NoHouse</b></p>
+                    <p>Describe: @item.Describe</p><br />
+                </div>
+                <div class="whereis">
+                    <h2>Location</h2>
+                    <br />
+                    <p>Street: <b>@item.Street</b></p>
+                    <p>City: <b>@item.City</b></p>
+                    <p>Country: <b>@item.Country</b></p>
+                    <p>Zip: <b>@item.Zip</b></p><br />
+                </div>
+                <div class="howmuchcost">
+                    <h2>More info</h2>
+                    <br />
+                    <p>Number of max guests: <b>@item.MaxGuest</b></p>
+                    <p>Number of bathroom: <b>@item.NrBathroom</b></p>
+                    <p>What space can use guests: <b>@item.WhatSpaceCanUseGuests</b></p>
+                    <p>What have a special item into room or home: <b>@item.SpecialItem</b></p>
+                    <p>Category: <b>@item.Category</b></p>
+                    <p>Phone number: <b>@item.PhoneNumber</b></p>
+                    <p>Notice guests: <b>@item.NoticeGuest</b></p>
+                    <p>Check in: <b>@item.Checkin</b></p>
+                    <p>Check out: <b>@item.Checkout</b></p><br />
+                </div>
+            </div>
+            <div>
+                <a asp-action="Index" asp-controller="Client" class="btn btn-secondary">Back to home</a>
+                @*<a asp-action="hello" asp-controller="Room" asp-route-id="@item.RoomId" class="btn btn-outline-secondary">Add to cart</a>*@
+                <a asp-action="Booking" asp-controller="Room" asp-route-id="@item.RoomId" class="btn btn-primary">Booking now</a>
+            </div>
+        }
+    </content>
+</body>
+</html>

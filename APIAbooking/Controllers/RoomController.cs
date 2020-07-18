@@ -36,10 +36,23 @@ namespace APIAbooking.Controllers
         //    return View(model);
         //}
 
-        
+        public IActionResult DetalistOfRoom(string id)
+        {
+            if(id == null)
+            {
+                NotFound();
+                return null;
+            }
+            else
+            {
+                //var room = _roomService.GetById(id);
+                return View(_dbContext.Rooms.Where(x => x.RoomId ==id));
+            }
+            
+        }
         public  IActionResult Booking(string id, Booking book)
         {
-            id = null;
+            
             if(id == null)
             {
               
@@ -48,13 +61,9 @@ namespace APIAbooking.Controllers
             }
             else
             {
-                book.BookId = "3";
-                book.RoomIdFk = id;
-                book.ClientIdFk = HttpContext.Session.GetString("Id"); 
-                book.TypeIdFk = "3";
-                 _dbContext.Bookings.Add(book);
-                _dbContext.SaveChanges();
-                return View(_dbContext.Bookings);
+                var clientId = HttpContext.Session.GetString("Id");
+                var booking = _roomService.CreateBooking(id, clientId, book);
+                return View(booking);
             }
         }
 
@@ -103,7 +112,7 @@ namespace APIAbooking.Controllers
         /// <param name="client"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Edit(string id)
+        public IActionResult Edit(string id)
         {
             if (ModelState.IsValid)
             {
@@ -132,7 +141,7 @@ namespace APIAbooking.Controllers
                 {
                     var room = _roomService.Delete(id);
 
-                    return RedirectToAction("GetAllPost", "Room");
+                    return RedirectToAction("Index", "Room");
                 }
                 else
                 {

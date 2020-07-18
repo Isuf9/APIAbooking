@@ -11,7 +11,7 @@ namespace APIAbooking.Models
         public string BookId { get; set; }
         public string NumberOfBooking { get; set; }
 
-        public virtual ClientServices ClientIdFkNavigation { get; set; }
+        public virtual Client ClientIdFkNavigation { get; set; }
         public virtual Room RoomIdFkNavigation { get; set; }
         public virtual TypePay TypeIdFkNavigation { get; set; }
     }

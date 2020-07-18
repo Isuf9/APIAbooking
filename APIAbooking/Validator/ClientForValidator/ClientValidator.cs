@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace APIAbooking.Validator.ClientForValidator
 {
-    public class ClientValidator : AbstractValidator<ClientServices>
+    public class ClientValidator : AbstractValidator<Client>
     {
         public ClientValidator()
         {

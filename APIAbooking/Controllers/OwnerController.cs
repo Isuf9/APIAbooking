@@ -70,7 +70,7 @@ namespace APIAbooking.Controllers
                 else
                 {
                     HttpContext.Session.SetString("Name", result.Name + " " + result.Lastname);
-                    return RedirectToAction("Dashbard");
+                    return RedirectToAction("Index");
                 }
             }
             return View(owner);

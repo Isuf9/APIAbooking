@@ -51,8 +51,8 @@
                 <td>@item.OwnerIdFk</td>
                 <td>@item.OwnerIdFkNavigation</td>
                 <td>
-                    <a class="btn btn-success" asp-action="Edit" asp-controller="Room" asp-route="@item.RoomId">Edit</a>
-                    <a class="btn btn-danger" asp-action="Edit" asp-controller="Room" asp-route="@item.RoomId">Delete</a>
+                    <a class="btn btn-success" asp-action="Edit" asp-controller="Room" asp-route-id="@item.RoomId">Edit</a>
+                    <a class="btn btn-danger" asp-action="Edit" asp-controller="Room" asp-route-id="@item.RoomId">Delete</a>
                 </td>
             </tr>
         }
