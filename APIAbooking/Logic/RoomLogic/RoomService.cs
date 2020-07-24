@@ -69,7 +69,7 @@ namespace APIAbooking.Logic.RoomLogic
             {
                 var _room = GetById(id);
                 var _booking = GetByIdBooking(id);
-                if (_room.Reserved == true && _room.Reserved == null)
+                if (_room.Reserved == true || _room.Reserved == null)
                 {
                     return false;
                 }
