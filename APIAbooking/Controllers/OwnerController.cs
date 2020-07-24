@@ -37,6 +37,7 @@ namespace APIAbooking.Controllers
         //[Route("clients/homepage/ClientId")]
         public async Task<IActionResult> Index(int page = 1)
         {
+            var idOwner = HttpContext.Session.GetString("Id"); 
             ViewBag.currentUser = HttpContext.Session.GetString("Name");
             var item = _dbContext.Rooms.AsNoTracking().OrderBy(x => x.RoomId);
             var model = await PagingList.CreateAsync(item, 4, page);
@@ -70,6 +71,7 @@ namespace APIAbooking.Controllers
                 else
                 {
                     HttpContext.Session.SetString("Name", result.Name + " " + result.Lastname);
+                    HttpContext.Session.SetString("Id", result.OwnerId);
                     return RedirectToAction("Index");
                 }
             }

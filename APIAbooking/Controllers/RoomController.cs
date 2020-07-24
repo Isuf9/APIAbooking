@@ -75,8 +75,9 @@ namespace APIAbooking.Controllers
         {
            if(room != null)
             {
+                room.OwnerIdFk = HttpContext.Session.GetString("Id");
                 var result = _roomService.Create(room);
-                return View(result);
+                return RedirectToAction(nameof(Index),"Onwer");
             }
             else
             {
@@ -84,54 +85,45 @@ namespace APIAbooking.Controllers
             }
         }
 
-        //public IActionResult GetAllPost(string owner_id) => View(_dbContext.Rooms.Where(x => x.OwnerIdFk == owner_id));
-
-
-
-        //[HttpGet]
-        //public async Task<IActionResult> Edit(string id)
-        //{
-        //    if (id == null)
-        //    {
-        //        NotFound("404 error");
-        //    }
-
-        //    var client = _dbContext.Rooms.Find(id);
-
-        //    if (client == null)
-        //    {
-        //        NotFound("404 error");
-        //    }
-        //    return View(client);
-        //}
-
-        /// <summary>
-        /// I ndryshon te dhenat e useri pasi aij te klikon buttonin update...
-        /// </summary>
-        /// <param name="id"></param>
-        /// <param name="client"></param>
-        /// <returns></returns>
-        [HttpPost]
+        [HttpGet]
         public IActionResult Edit(string id)
         {
             if (ModelState.IsValid)
             {
-               if (id != null)
-                    {
-                       var room = _roomService.Edit(id);
-
-                       return RedirectToAction("GetAllPost", "Room");
-                    }
-               else
-                    {
-                       return View();
-                    }
+                if(id == null)
+                {
+                    return View();
                 }
+                else
+                {
+                    var room = _roomService.GetById(id);
+                    return View(room);
+                }
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Edit(string id, Room room)
+        {
+            if (ModelState.IsValid)
+            {
+                if (id != null)
+                {
+                    room = _roomService.Edit(id);
+
+                    return RedirectToAction(nameof(Index),"Onwer");
+                }
+                else
+                {
+                    return View();
+                }
+            }
             return RedirectToAction("GetAllPost", "Room");
         }
-     
-    
-    [HttpGet]
+
+
+        [HttpGet]
     public IActionResult Delete(string id)
     {
 
@@ -140,8 +132,15 @@ namespace APIAbooking.Controllers
                 if (id != null)
                 {
                     var room = _roomService.Delete(id);
-
-                    return RedirectToAction("Index", "Room");
+                    if (room.Equals(false))
+                    {
+                        ViewBag.Description = "You can't delete a room because this room is booking now. Please information guest that this room is not avaible for live!";
+                        return RedirectToAction(nameof(Index), "Owner");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Room");
+                    }
                 }
                 else
                 {
@@ -149,7 +148,7 @@ namespace APIAbooking.Controllers
                 }
         }
         
-        return RedirectToAction("GetAllPost", "Room");
-    }
+        return RedirectToAction(nameof(Index), "Owner");
+        }
     }
 }
