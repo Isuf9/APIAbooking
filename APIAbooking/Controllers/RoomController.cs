@@ -77,7 +77,7 @@ namespace APIAbooking.Controllers
             {
                 room.OwnerIdFk = HttpContext.Session.GetString("Id");
                 var result = _roomService.Create(room);
-                return RedirectToAction(nameof(Index),"Onwer");
+                return RedirectToAction(nameof(Index),"Owner");
             }
             else
             {
@@ -104,15 +104,15 @@ namespace APIAbooking.Controllers
         }
 
         [HttpPost]
-        public IActionResult Edit(string id, Room room)
+        public IActionResult Edit(Room room)
         {
             if (ModelState.IsValid)
             {
-                if (id != null)
+                if (room != null)
                 {
-                    room = _roomService.Edit(id);
+                    room = _roomService.Edit(room);
 
-                    return RedirectToAction(nameof(Index),"Onwer");
+                    return RedirectToAction(nameof(Index),"Owner");
                 }
                 else
                 {

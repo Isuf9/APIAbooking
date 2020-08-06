@@ -11,12 +11,12 @@ namespace TestOfApplication
 {
     public class ClientTesting
     {
-        //[Fact]
-        //public string IfEmailExist()
-        //{
-        //    var client = new ClientsController();
+        [Fact]
+        public string IfEmailExist()
+        {
+            var client = new ClientsController();
 
-        //    client.Login();
+            client.Login();
         }
     }
 }

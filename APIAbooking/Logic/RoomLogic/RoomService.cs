@@ -68,13 +68,14 @@ namespace APIAbooking.Logic.RoomLogic
             if(id != null)
             {
                 var _room = GetById(id);
-                var _booking = GetByIdBooking(id);
+              //  var _booking = GetByIdBooking("100");
                 if (_room.Reserved == true || _room.Reserved == null)
                 {
                     return false;
                 }
                 else
                 {
+                    //_dbContext.Bookings.Remove(_booking);
                     _dbContext.Rooms.Remove(_room);
                     Save();
                     return true;
@@ -86,11 +87,10 @@ namespace APIAbooking.Logic.RoomLogic
             }
         }
 
-        public Room Edit(string id)
+        public Room Edit(Room room)
         {
-            if (id != null)
+            if (room != null)
             {
-                var room = GetById(id);
                 _dbContext.Rooms.Update(room);
                 Save();
                     
@@ -128,7 +128,7 @@ namespace APIAbooking.Logic.RoomLogic
         public Booking GetByIdBooking(string id)
         {
             if (id == null) { return null; }
-            var book = _dbContext.Bookings.Find("2");
+            var book = _dbContext.Bookings.Find(id);
             return book;
         }
 

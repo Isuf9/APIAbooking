@@ -10,6 +10,7 @@ using ReflectionIT.Mvc.Paging;
 using ReflectionIT.Mvc;
 using Microsoft.AspNetCore.Http;
 using APIAbooking.Services.RoomService;
+using System;
 
 namespace APIAbooking.Controllers
 {
@@ -36,7 +37,7 @@ namespace APIAbooking.Controllers
                     {
                         _dbContext = db;
                         _clientService = client;
-            _iService = service;
+                        _iService = service;
                         _localizer = localizer;
                     }
         #endregion
@@ -49,15 +50,23 @@ namespace APIAbooking.Controllers
         /// </summary>
         /// <param name="client"></param>
         /// <returns></returns>
-        [HttpGet]
+        //
         //[Route("clients/homepage/ClientId")]
-        public async Task<IActionResult> Index(int page = 1)
+        [HttpGet]
+        public IActionResult Home()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Index(string location)
+        {
+            
             ViewBag.currentUser = HttpContext.Session.GetString("Name");
             ViewBag.Id = HttpContext.Session.GetString("Id");
             var item = _dbContext.Rooms.AsNoTracking().OrderBy(x => x.Price);
-            var model = await PagingList.CreateAsync(item, 4, page);
-            
+            var model = await PagingList.CreateAsync(item, 4, 1);
+
             return View(nameof(Index), model);
         }
 

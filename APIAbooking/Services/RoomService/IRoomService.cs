@@ -9,7 +9,7 @@ namespace APIAbooking.Services.RoomService
     public interface IRoomService : IService
     {
         Room Create(Room room);
-        Room Edit(string id);
+        Room Edit(Room room);
         bool Delete(string id);
         void Save();
         void SaveChangesAsync();

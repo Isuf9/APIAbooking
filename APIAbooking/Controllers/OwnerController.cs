@@ -35,13 +35,12 @@ namespace APIAbooking.Controllers
         
         [HttpGet]
         //[Route("clients/homepage/ClientId")]
-        public async Task<IActionResult> Index(int page = 1)
+        public async Task<IActionResult> Index()
         {
             var idOwner = HttpContext.Session.GetString("Id"); 
             ViewBag.currentUser = HttpContext.Session.GetString("Name");
-            var item = _dbContext.Rooms.AsNoTracking().OrderBy(x => x.RoomId);
-            var model = await PagingList.CreateAsync(item, 4, page);
-            return View(model);
+            var post = await _ownerService.GetPostRoomByOwnerId(idOwner);
+            return View(post);
         }
         public IActionResult Dashboard(RoomOwner owner)
         {

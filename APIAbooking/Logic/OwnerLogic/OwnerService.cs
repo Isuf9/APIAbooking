@@ -125,5 +125,12 @@ namespace APIAbooking.Logic.OwnerLogic
         {
             _dbContext.SaveChangesAsync();
         }
+
+        public async Task<IList<Room>> GetPostRoomByOwnerId(string ownerId)
+        {
+            var result = _dbContext.Rooms.Where(x => x.OwnerIdFk == ownerId).ToList();
+
+            return result;
+        }
     }
 }
