@@ -58,7 +58,7 @@ namespace APIAbooking.Controllers
         [HttpPost]
         public IActionResult Login(RoomOwner owner)
         {
-            //_ownerService.EncryptPassword(Encoding , owner.Password);
+            owner.Password = _ownerService.EncryptPassword(Encoding.UTF8, owner.Password);
             var result = _ownerService.Login(owner.Email, owner.Password);
             if (ModelState.IsValid)
             {
@@ -69,8 +69,10 @@ namespace APIAbooking.Controllers
                 }
                 else
                 {
-                    HttpContext.Session.SetString("Name", result.Name + " " + result.Lastname);
-                    HttpContext.Session.SetString("Id", result.OwnerId);
+                     HttpContext.Session.GetString("Id");
+                     HttpContext.Session.GetString("Name");
+                    //HttpContext.Session.SetString("Name", result.Name + " " + result.Lastname);
+                    //HttpContext.Session.SetString("Id", result.OwnerId);
                     return RedirectToAction("Index");
                 }
             }
@@ -91,7 +93,12 @@ namespace APIAbooking.Controllers
                     if (result == false)
                     {
                         owner.Password = _ownerService.EncryptPassword(Encoding.UTF8, owner.Password);
+                        owner.TypeOfUser = 1;
                         _ownerService.Create(owner);
+                        HttpContext.Session.SetString("Name", owner.Name + " " + owner.Lastname);
+                        HttpContext.Session.SetString("Id", owner.OwnerId);
+
+                        return RedirectToAction(nameof(Index));
                     }
                     else
                     {
@@ -99,7 +106,7 @@ namespace APIAbooking.Controllers
                         return View(owner);
                     }
                 }
-                return RedirectToAction("HomePage", owner);
+                
             }
             return View(owner);
         }

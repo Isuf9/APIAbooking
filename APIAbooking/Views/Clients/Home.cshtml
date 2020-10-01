@@ -1,20 +1,13 @@
-﻿<html>
-<head>
+﻿@model APIAbooking.Models.Room
 
-</head>
-<body>
-    <content>
-        <form method="post" asp-action="Index" asp-controller="Clients">
+        <form method="post" asp-action="Home" asp-controller="Clients">
             <div class="row" style="background-color:gray">
 
-                <div class="column"><input  type="text" placeholder="Location" /></div>
-                @*<div class="column"><input type="datetime" /></div>
-                <div class="column"><input type="datetime" /></div>
-                <div class="column"><input type="number" /></div>*@
+                <div  class="column"><input asp-for="Country" type="text" placeholder="Location" /></div>
+                <div class="column"><input asp-for="Checkin" type="datetime" /></div>
+                <div  class="column"><input asp-for="Checkout" type="datetime" /></div>
+                <div  class="column"><input asp-for="MaxGuest" type="number" /></div>
                 <div class="column"><input type="submit" value="Search" class="btn btn-primary" /></div>
 
             </div>
         </form>
-    </content>
-</body>
-</html>

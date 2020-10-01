@@ -6,11 +6,11 @@ using APIAbooking.Services;
 using System.Text;
 using Microsoft.Extensions.Localization;
 using Microsoft.EntityFrameworkCore;
-using ReflectionIT.Mvc.Paging;
-using ReflectionIT.Mvc;
+
 using Microsoft.AspNetCore.Http;
 using APIAbooking.Services.RoomService;
 using System;
+using ReflectionIT.Mvc.Paging;
 
 namespace APIAbooking.Controllers
 {
@@ -55,19 +55,44 @@ namespace APIAbooking.Controllers
         [HttpGet]
         public IActionResult Home()
         {
+            //string country, DateTime checkin, DateTime checkout, int maxGuests
+           
             return View();
         }
-
         [HttpPost]
-        public async Task<IActionResult> Index(string location)
+        public IActionResult Home(Room _room)
+        {
+            //string country, DateTime checkin, DateTime checkout, int maxGuests
+            var _getAllRooms = _dbContext.Rooms
+                .OrderBy(x => x.Price)
+                //.ThenByDescending(x => x.Checkin)
+                //.ThenByDescending(x => x.Checkout)
+                //.ThenByDescending(x => x.MaxGuest)
+                .Where(x=> x.Country == _room.Country
+                && x.Checkin == _room.Checkin
+                && x.Checkout == _room.Checkout
+                && x.MaxGuest == _room.MaxGuest)
+                .Select(x=> new Room {
+                NameOfRoom = x.NameOfRoom,
+                Country = x.Country,
+                City = x.City,
+                Describe = x.Describe
+                })
+                .ToList();
+            var result = _getAllRooms;
+            //return View(_getAllRooms);
+            return RedirectToAction(nameof(Index), _getAllRooms);
+        }
+
+        public async Task<IActionResult> Index(int page = 1)
         {
             
             ViewBag.currentUser = HttpContext.Session.GetString("Name");
             ViewBag.Id = HttpContext.Session.GetString("Id");
-            var item = _dbContext.Rooms.AsNoTracking().OrderBy(x => x.Price);
-            var model = await PagingList.CreateAsync(item, 4, 1);
+            var item =  _clientService.GetAllPost();
+            //var model = await PagingList.CreateAsync(item, 4, page);
 
-            return View(nameof(Index), model);
+            return  View(item);
         }
 
         public IActionResult Detalist(string id)
@@ -88,7 +113,7 @@ namespace APIAbooking.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public async Task<IActionResult> PersonalInfo(string? id)
+        public async Task<IActionResult> PersonalInfo(string id)
         {
             if (id == null)
             {
@@ -117,6 +142,7 @@ namespace APIAbooking.Controllers
         {
             client.Password = _clientService.EncryptPassword(Encoding.UTF8, client.Password);
             var result =  _clientService.Login(client.Email, client.Password);
+
             
             if(result == null)
             {
@@ -125,9 +151,9 @@ namespace APIAbooking.Controllers
             }
             else
             {
-                HttpContext.Session.SetString("Name", result.Name+ " "+ result.Lastname);
-                HttpContext.Session.SetString("Id", result.ClientId);
-                return RedirectToAction("Index");
+                HttpContext.Session.GetString("Name");
+                HttpContext.Session.GetString("Id");
+                return RedirectToAction(nameof(Index));
                 
             }
         }
@@ -163,7 +189,10 @@ namespace APIAbooking.Controllers
 
                         client.Password = _clientService.EncryptPassword(Encoding.UTF8, client.Password);
                         _clientService.Create(client);
-                        
+                        HttpContext.Session.SetString("Name", client.Name + " " + client.Lastname);
+                        HttpContext.Session.SetString("Id", client.ClientId);
+                        return RedirectToAction(nameof(Index), "Clients");
+
                     }
                     else
                     {

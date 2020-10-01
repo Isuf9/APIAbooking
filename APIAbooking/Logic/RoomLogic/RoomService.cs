@@ -91,6 +91,7 @@ namespace APIAbooking.Logic.RoomLogic
         {
             if (room != null)
             {
+
                 _dbContext.Rooms.Update(room);
                 Save();
                     
@@ -121,7 +122,7 @@ namespace APIAbooking.Logic.RoomLogic
         public Room GetById(string id)
         {
             if (id == null) { return null; }
-            var room = _dbContext.Rooms.Find(id);
+            var room = _dbContext.Rooms.FirstOrDefault(x=> x.RoomId == id);
             return room;
         }
 

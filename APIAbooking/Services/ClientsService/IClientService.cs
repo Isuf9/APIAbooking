@@ -11,6 +11,7 @@ namespace APIAbooking.Services
     {
         
         Client GetById(string id_client);
+        IEnumerable<Room> GetAllPost();//list e numrushme
         public bool IfEmailExist(string email);
         public Client Login(string email, string password);
         public Client Create(Client client);

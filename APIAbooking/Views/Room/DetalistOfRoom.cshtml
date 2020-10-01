@@ -14,10 +14,12 @@
                 <div class="aboutroom">
                     <br />
                     <br />
-                    <h2>About room</h2>
-                    <p>Name of the room: <b>@item.NameOfRoom</b></p>
-                    <p>Number of room or house: <b>@item.NoHouse</b></p>
-                    <p>Describe: @item.Describe</p><br />
+                    <fieldset>
+                        About room
+                        <p>Name of the room: <b>@item.NameOfRoom</b></p>
+                        <p>Number of room or house: <b>@item.NoHouse</b></p>
+                        <p>Describe: @item.Describe</p><br />
+                    </fieldset>
                 </div>
                 <div class="whereis">
                     <h2>Location</h2>
@@ -42,7 +44,7 @@
                 </div>
             </div>
             <div>
-                <a asp-action="Index" asp-controller="Client" class="btn btn-secondary">Back to home</a>
+                <a asp-action="Index" asp-controller="Clients" class="btn btn-secondary">Back to home</a>
                 @*<a asp-action="hello" asp-controller="Room" asp-route-id="@item.RoomId" class="btn btn-outline-secondary">Add to cart</a>*@
                 <a asp-action="Booking" asp-controller="Room" asp-route-id="@item.RoomId" class="btn btn-primary">Booking now</a>
             </div>

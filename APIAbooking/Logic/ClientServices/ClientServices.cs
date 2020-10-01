@@ -128,5 +128,10 @@ namespace APIAbooking.Logic.Client
             _dbContext.SaveChangesAsync();
         }
 
+        public  IEnumerable<Room> GetAllPost()
+        {
+            var result =  _dbContext.Rooms.Where(x => x.Reserved == false).AsEnumerable<Room>();
+            return result;
+        }
     }
 }

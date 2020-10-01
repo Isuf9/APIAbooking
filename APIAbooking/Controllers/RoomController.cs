@@ -110,6 +110,7 @@ namespace APIAbooking.Controllers
             {
                 if (room != null)
                 {
+                    room.OwnerIdFk = HttpContext.Session.GetString("Id");
                     room = _roomService.Edit(room);
 
                     return RedirectToAction(nameof(Index),"Owner");
@@ -132,6 +133,7 @@ namespace APIAbooking.Controllers
                 if (id != null)
                 {
                     var room = _roomService.Delete(id);
+                   
                     if (room.Equals(false))
                     {
                         ViewBag.Description = "You can't delete a room because this room is booking now. Please information guest that this room is not avaible for live!";
@@ -139,7 +141,7 @@ namespace APIAbooking.Controllers
                     }
                     else
                     {
-                        return RedirectToAction("Index", "Room");
+                        return RedirectToAction(nameof(Index), "Owner");
                     }
                 }
                 else

@@ -8,45 +8,55 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th> @Html.DisplayNameFor(model => model.MaxGuest)</th>
-            <td> @Html.DisplayNameFor(model => model.NrBathroom)</td>
-            <th> @Html.DisplayNameFor(model => model.Country)</th>
-            <th> @Html.DisplayNameFor(model => model.Street)</th>
-            <th> @Html.DisplayNameFor(model => model.City)</th>
-            <th> @Html.DisplayNameFor(model => model.NoHouse)</th>
-            <th> @Html.DisplayNameFor(model => model.Zip)</th>
-            <th> @Html.DisplayNameFor(model => model.WhatSpaceCanUseGuests)</th>
-            <th> @Html.DisplayNameFor(model => model.SpecialItem)</th>
-            <th> @Html.DisplayNameFor(model => model.Photo)</th>
-            <th> @Html.DisplayNameFor(model => model.Describe)</th>
-            <th> @Html.DisplayNameFor(model => model.PhoneNumber)</th>
-            <th> @Html.DisplayNameFor(model => model.Checkin)</th>
-            <th> @Html.DisplayNameFor(model => model.Checkout)</th>
-            <th> @Html.DisplayNameFor(model => model.Price)</th>
-            <th> @Html.DisplayNameFor(model => model.Reserved)</th>
+            <th>Max Guest</th>
+            <td>Number of bathroom</td>
+            <th>County</th>
+            <th>Street</th>
+            <th>City</th>
+            <th>Number of house</th>
+            <th>Zip</th>
+            <th>What space can use guests</th>
+            <th>Special item</th>
+            <th>Photo</th>
+            <th>Discribe</th>
+            <th>Phone number</th>
+            <th>Checkin</th>
+            <th>Checkout</th>
+            <th>Price</th>
+            <th>Reserverd</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>@item.MaxGuest</td>
-                <td>@item.NrBathroom</td>
-                <td>@item.Country</td>
-                <td>@item.Street</td>
-                <td>@item.City</td>
-                <td>@item.NoHouse</td>
-                <td>@item.Zip</td>
-                <td>@item.WhatSpaceCanUseGuests</td>
-                <td>@item.SpecialItem</td>
-                <td>@item.Photo</td>
-                <td>@item.Describe</td>
-                <td>@item.PhoneNumber</td>
-                <td>@item.Checkin</td>
-                <td>@item.Checkout</td>
-                <td>@item.Price</td>
-                <td>@item.Reserved</td>
-            </tr>
+            @if (Model == null)
+            {
+        <tr>
+           You dont have any post
+        </tr>
+            }
+            else
+            {
+                <tr>
+                    <td>@item.MaxGuest</td>
+                    <td>@item.NrBathroom</td>
+                    <td>@item.Country</td>
+                    <td>@item.Street</td>
+                    <td>@item.City</td>
+                    <td>@item.NoHouse</td>
+                    <td>@item.Zip</td>
+                    <td>@item.WhatSpaceCanUseGuests</td>
+                    <td>@item.SpecialItem</td>
+                    <td>@item.Photo</td>
+                    <td>@item.Describe</td>
+                    <td>@item.PhoneNumber</td>
+                    <td>@item.Checkin</td>
+                    <td>@item.Checkout</td>
+                    <td>@item.Price</td>
+                    <td>@item.Reserved</td>
+                </tr>
+            }
+
         }
     </tbody>
 </table>
